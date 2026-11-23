@@ -49,7 +49,8 @@ src/
     ├── wave-interference/  # Tier 3: 2D FDTD scalar wave equation
     ├── charged-particles/  # Tier 1: Lorentz force via Boris pusher (cyclotron, E×B, selector, mass spec)
     ├── quantum-tunneling/  # Tier 3: 1D TDSE, Crank–Nicolson + exactly tracked absorbing boundaries
-    └── quantum-bound-states/ # Tier 2: Eigenstates (analytic + Sturm bisection) with exact spectral evolution
+    ├── quantum-bound-states/ # Tier 2: Eigenstates (analytic + Sturm bisection) with exact spectral evolution
+    └── hydrogen-atom/      # Tier 2: Exact hydrogen orbitals, |ψ|² sampling, dipole selection rules & lifetimes
 ```
 
 ## How to Add a New Simulation

@@ -26,6 +26,8 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
   Crank–Nicolson solver for the 1D time-dependent Schrödinger equation (electron, nm/eV/fs units) with exactly tracked absorbing boundaries: free-packet spreading versus σ(t) theory, tunneling and above-barrier reflection, and resonant tunneling through a double barrier, with a live transmission spectrum T(E) and a classical-particle comparison.
 - **Quantum Mechanics — Bound States & Energy Quantization**
   Exact spectral time evolution in a particle-in-a-box, harmonic oscillator, finite well and double well (analytic and Sturm-bisection eigenstates): clickable energy-level superpositions, energy and position measurements with collapse, double-well tunneling oscillations, coherent states, and a quantum revival with a live space-time "quantum carpet".
+- **Quantum Mechanics — Schrödinger's Hydrogen Atom & Orbitals**
+  Exact hydrogen eigenfunctions (n ≤ 4, real s/p/d/f orbitals) rendered as rotatable |ψ|²-sampled electron clouds and nodal slices, Bohr-orbit comparison, radial probability P(r), superpositions whose charge cloud oscillates at ΔE/h, computed dipole selection rules and radiative lifetimes, and an emission spectrum built photon by photon.
 
 ## Local Development
 

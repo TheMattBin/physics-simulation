@@ -10,6 +10,7 @@ import { WaveInterferenceLab } from './wave-interference';
 import { ChargedParticlesLab } from './charged-particles';
 import { QuantumTunnelingLab } from './quantum-tunneling';
 import { QuantumBoundStatesLab } from './quantum-bound-states';
+import { HydrogenAtomLab } from './hydrogen-atom';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -822,6 +823,81 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Choose "Quantum Revival" and watch for about 11 fs (one revival time), using the space-time picture as a map. Then change the Box Width to 2 nm.',
           takeaway:
             'The packet bounces a few times, smears into an apparently random interference pattern, then reforms almost perfectly at T_rev = h/E₁ ≈ 11 fs. Two half-size copies appear at T_rev/2. The carpet’s fractal-looking pattern is a "quantum carpet". Doubling L makes T_rev four times longer (≈ 44 fs), since T_rev ∝ L².',
+        },
+      ],
+    },
+  },
+  {
+    id: 'hydrogen-atom',
+    title: "Schrödinger's Hydrogen Atom & Orbitals",
+    subtitle:
+      'Explore the electron-cloud model that replaced Bohr’s orbits: rotate exact 1s, 2p, 3d and 4f orbitals, compare with Bohr’s radii, and emit the photons that make hydrogen’s spectrum.',
+    domain: 'quantum',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 6',
+    tags: ['Hydrogen Atom', 'Orbitals', 'Quantum Numbers', 'Spectral Lines', 'Selection Rules'],
+    equationPreview: '\\psi_{n\\ell m} = R_{n\\ell}(r)\\,Y_{\\ell m}(\\theta,\\varphi), \\quad E_n = -\\frac{13.6\\ \\text{eV}}{n^2}',
+    summary:
+      'Electron clouds sampled from exact wave functions, Bohr vs. Schrödinger radii, computed selection rules and lifetimes, and a hydrogen spectrum you build one photon at a time.',
+    component: HydrogenAtomLab,
+    theory: {
+      overview:
+        'Bohr pictured the electron in hydrogen on fixed circular orbits. In 1926 Schrödinger replaced them with standing waves of the electron around the proton. Solving his equation for the Coulomb potential gives wave functions labelled by three quantum numbers: n sets the energy and size, l the shape (s, p, d, f) and m the orientation. |ψ|² is a probability cloud, not a path. The energies agree exactly with Bohr’s formula, but the electron has no orbit: a 1s electron is most likely found at Bohr’s radius a₀, yet it can be anywhere. Light is emitted when the atom is in a superposition of two levels: its charge cloud then oscillates at ΔE/h and radiates a photon of exactly that frequency. That is why hydrogen glows at only a few sharp wavelengths.',
+      equations: [
+        {
+          label: 'Energy Levels',
+          latex: 'E_n = -\\frac{m_e e^4}{8\\varepsilon_0^2 h^2}\\,\\frac{1}{n^2} \\approx -\\frac{13.6\\ \\text{eV}}{n^2}',
+          explanation:
+            'The energy depends only on n, so each level holds n² orbitals (all l < n and −l ≤ m ≤ l) with exactly the same energy.',
+        },
+        {
+          label: 'Orbitals = Radial × Angular',
+          latex: '\\psi_{n\\ell m} = R_{n\\ell}(r)\\,Y_{\\ell m}(\\theta, \\varphi), \\qquad P(r) = r^2 |R_{n\\ell}|^2',
+          explanation:
+            'R has n − l − 1 radial nodes (spheres) and Y has l angular nodes (planes or cones). For l = n − 1 the most probable radius is exactly Bohr’s n²a₀.',
+        },
+        {
+          label: 'Photon Wavelengths (Rydberg)',
+          latex: '\\frac{1}{\\lambda} = R_H\\left(\\frac{1}{n_\\text{low}^2} - \\frac{1}{n_\\text{up}^2}\\right)',
+          explanation:
+            'Jumps down to n = 1 give the ultraviolet Lyman series, to n = 2 the visible Balmer series (Hα at 656 nm is red), and to n = 3 the infrared Paschen series.',
+        },
+        {
+          label: 'Selection Rule & Emission Rate',
+          latex: 'A = \\frac{\\omega^3 |\\langle b|e\\mathbf{r}|a\\rangle|^2}{3\\pi\\varepsilon_0\\hbar c^3}, \\qquad \\Delta\\ell = \\pm 1',
+          explanation:
+            'A photon is emitted only if the superposition has an oscillating dipole, ⟨b|r|a⟩ ≠ 0, which requires Δl = ±1. The lab computes these integrals directly, so 2s → 1s comes out forbidden and the lifetimes follow from A.',
+        },
+      ],
+      assumptions: [
+        'Exact non-relativistic hydrogen eigenfunctions (Laguerre polynomials × real spherical harmonics). Fine structure, the Lamb shift and spin are ignored, so all states with the same n share one energy.',
+        'Energies use the reduced-mass Rydberg R_H = 13.598 eV, so wavelengths match measured vacuum values (Hα = 656.47 nm). Lengths are in Bohr radii a₀ = 0.0529 nm.',
+        'The electron cloud is an exact random sample of |ψ|²: radius drawn from r²R² by inverse CDF and direction from |Y|² by rejection. Point density is probability density.',
+        'Dipole matrix elements use Simpson (radial) and Gauss–Legendre (angular) quadrature. The computed lifetimes (2p: 1.60 ns, 3p: 5.28 ns, 3s: 159 ns, 4f: 72.6 ns) agree with published values to within ~1%.',
+        'A superposition is shown with equal weights, and its charge oscillation is slowed by ~10¹⁵ so you can see it. "Emit Photon" collapses the state to the lower level, a simplified picture of spontaneous emission.',
+      ],
+      experiments: [
+        {
+          title: 'Bohr Was Half Right',
+          prompt:
+            'Choose "Ground State 1s", turn on Bohr Orbit, and compare the cloud and the radial plot with Bohr’s circle. Repeat for n = 2, l = 1 and n = 3, l = 2.',
+          takeaway:
+            'The most probable radius is exactly n²a₀, Bohr’s orbit radius, and the energies match his formula too. But the electron is a cloud spread over all distances, not a particle on a track. For lower l at the same n (2s, 3s) the cloud gains radial nodes and spreads further out.',
+        },
+        {
+          title: 'Why Hydrogen Glows Red',
+          prompt:
+            'Choose "Balmer Hα (3d → 2p)". Watch the cloud slosh, then press Emit Photon. Next try "Lyman α", and set up 4p + 2s to find the cyan Hβ line.',
+          takeaway:
+            'A superposition makes the charge cloud oscillate at ΔE/h. That oscillating dipole radiates exactly one photon wavelength: 656.47 nm for 3 → 2 (red), 121.57 nm for 2 → 1 (ultraviolet) and 486.27 nm for 4 → 2. Collect enough photons and the spectrum shows hydrogen’s fingerprint lines.',
+        },
+        {
+          title: 'The Forbidden Transition',
+          prompt:
+            'Choose "Forbidden 2s → 1s" and watch the cloud, then press Emit Photon. Compare the 2p and 2s lifetimes by selecting each on its own.',
+          takeaway:
+            'In 2s + 1s the cloud only breathes in and out symmetrically. With no oscillating dipole, ⟨1s|r|2s⟩ = 0 and no single photon can be emitted. 2p decays in 1.6 ns, but 2s is metastable: real 2s atoms live ~0.12 s and finally decay by emitting two photons at once.',
         },
       ],
     },
