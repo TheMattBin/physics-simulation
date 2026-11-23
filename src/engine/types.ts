@@ -6,7 +6,8 @@ export type PhysicsDomain =
   | 'thermodynamics'
   | 'fluids'
   | 'waves'
-  | 'electromagnetism';
+  | 'electromagnetism'
+  | 'quantum';
 
 export type SimulationStatus = 'ready' | 'planned';
 
@@ -60,6 +61,13 @@ export const DOMAINS: Record<PhysicsDomain, DomainInfo> = {
     shortLabel: 'E&M',
     accent: '#fb7185',
     badgeClass: 'bg-rose-500/10 text-rose-300 border-rose-500/25',
+  },
+  quantum: {
+    id: 'quantum',
+    label: 'Quantum Mechanics',
+    shortLabel: 'Quantum',
+    accent: '#a3e635',
+    badgeClass: 'bg-lime-500/10 text-lime-300 border-lime-500/25',
   },
 };
 

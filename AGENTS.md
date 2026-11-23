@@ -47,7 +47,8 @@ src/
     ├── wind-tunnel/        # Tier 3: 2D D2Q9 Lattice Boltzmann fluid solver
     ├── heat-conduction/    # Tier 3: 2D finite-volume Fourier heat diffusion PDE
     ├── wave-interference/  # Tier 3: 2D FDTD scalar wave equation
-    └── charged-particles/  # Tier 1: Lorentz force via Boris pusher (cyclotron, E×B, selector, mass spec)
+    ├── charged-particles/  # Tier 1: Lorentz force via Boris pusher (cyclotron, E×B, selector, mass spec)
+    └── quantum-tunneling/  # Tier 3: 1D TDSE, Crank–Nicolson + exactly tracked absorbing boundaries
 ```
 
 ## How to Add a New Simulation

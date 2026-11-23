@@ -8,6 +8,7 @@ import { NewtonsLawsLab } from './newtons-laws';
 import { HeatConductionLab } from './heat-conduction';
 import { WaveInterferenceLab } from './wave-interference';
 import { ChargedParticlesLab } from './charged-particles';
+import { QuantumTunnelingLab } from './quantum-tunneling';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -671,6 +672,80 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Choose "Mass Spectrometer" and let the detector collect ions for 20–30 s (2x speed helps). Then change B₂ from 300 to 400 mT.',
           takeaway:
             'Natural neon splits into two clear peaks at 20 u and 22 u in a ~10:1 ratio, plus a faint Ne-21 trace. Thomson’s 1913 version of this experiment was the first evidence that a stable element can have isotopes. Raising B₂ shrinks every orbit, yet the calibrated masses stay put, because the measurement depends only on q, B₂, D and v.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'quantum-tunneling',
+    title: 'Quantum Tunneling & Wave Packets',
+    subtitle:
+      'Fire an electron wave packet at nanometre barriers and watch part of it pass through a region a classical particle could never enter.',
+    domain: 'quantum',
+    level: 'University',
+    status: 'ready',
+    phase: 'Phase 6',
+    tags: ['Schrödinger Equation', 'Tunneling', 'Wave Packets', 'Resonant Tunneling', 'Crank–Nicolson'],
+    equationPreview: 'i\\hbar\\frac{\\partial \\psi}{\\partial t} = -\\frac{\\hbar^2}{2m}\\frac{\\partial^2 \\psi}{\\partial x^2} + V\\psi',
+    summary:
+      'Solve the time-dependent Schrödinger equation live for a real electron: packet spreading, tunneling through barriers, reflection above them, and resonant tunneling through two barriers.',
+    component: QuantumTunnelingLab,
+    theory: {
+      overview:
+        'In quantum mechanics an electron is described by a wave function ψ(x, t), and |ψ|² gives the probability of finding it at x. The time-dependent Schrödinger equation moves ψ forward in time. A localized electron is a wave packet: a bundle of plane waves with a spread of momenta, and therefore of energies. Inside a barrier taller than the electron’s energy, the wave does not stop dead. It decays exponentially, so if the barrier is thin enough some of the wave emerges on the far side. This is tunneling, which drives scanning tunneling microscopes, flash memory and nuclear fusion in the Sun. The same wave nature makes an electron partly reflect even from a barrier it has enough energy to cross, and lets two barriers together pass more than one alone when the energy matches a resonance between them.',
+      equations: [
+        {
+          label: 'Time-Dependent Schrödinger Equation',
+          latex: 'i\\hbar\\frac{\\partial \\psi}{\\partial t} = -\\frac{\\hbar^2}{2m}\\frac{\\partial^2 \\psi}{\\partial x^2} + V(x)\\,\\psi',
+          explanation:
+            'Total probability ∫|ψ|² dx is conserved. Here ħ²/2m = 0.0381 eV·nm² for an electron, so nanometre barriers and electron-volt energies are the natural scale.',
+        },
+        {
+          label: 'Tunneling Probability (single barrier, E < V₀)',
+          latex: 'T = \\left[1 + \\frac{V_0^2 \\sinh^2(\\kappa a)}{4E(V_0 - E)}\\right]^{-1}, \\quad \\kappa = \\frac{\\sqrt{2m(V_0 - E)}}{\\hbar}',
+          explanation:
+            'For thick barriers T ≈ 16(E/V₀)(1 − E/V₀) e^{−2κa}: transmission falls exponentially with width. The lab averages T(E) over the packet’s energy spread to predict the measured value.',
+        },
+        {
+          label: 'Free Packet Spreading',
+          latex: '\\sigma(t) = \\sigma_0\\sqrt{1 + \\left(\\frac{\\hbar t}{2m\\sigma_0^2}\\right)^2}',
+          explanation:
+            'A packet of width σ₀ contains momenta spread by Δp = ħ/2σ₀, so its fastest and slowest parts separate. Narrow packets spread fastest, and Δx·Δp grows above its minimum ħ/2.',
+        },
+        {
+          label: 'de Broglie Wavelength & Group Velocity',
+          latex: '\\lambda = \\frac{h}{p} = \\frac{2\\pi}{k_0}, \\qquad v_g = \\frac{\\hbar k_0}{m}',
+          explanation:
+            'A 4 eV electron has λ ≈ 0.6 nm, comparable to the barriers here. That is why wave effects dominate. The packet as a whole moves at the classical speed v_g.',
+        },
+      ],
+      assumptions: [
+        'Crank–Nicolson time stepping (Δt = 0.01 fs) is unitary: total probability is conserved to about 10⁻¹². Complex absorbing potentials at both ends remove outgoing waves, and the probability they absorb is tracked exactly, so R + T + P(in barrier) = 1 to round-off.',
+        'Second-order finite differences on a 0.01 nm grid. Numerical dispersion makes packets move and spread ~0.3–1% slower than the continuum formulas at 5 eV. Transmission agrees with transfer-matrix theory to within 0.005.',
+        'One spinless, non-relativistic electron in one dimension, with sharp-edged rectangular barriers. Real barriers (oxide layers, STM gaps) have smooth profiles and image-charge effects.',
+        'Theory curves come from continuum transfer matrices for the same piecewise-constant potential, averaged over the packet’s Gaussian momentum distribution.',
+      ],
+      experiments: [
+        {
+          title: 'Through a Forbidden Wall',
+          prompt:
+            'Choose "Tunneling Barrier" (E₀ = 4 eV, V₀ = 6 eV) and watch the classical particle and the packet. Then increase Barrier Width from 0.20 to 0.30 and 0.40 nm.',
+          takeaway:
+            'The classical particle bounces back every time, but about 18% of the wave tunnels through. Doubling the width to 0.4 nm cuts T about 15×, to roughly 1%, because the wave decays as e^{−κx} inside the barrier. That exponential sensitivity lets a scanning tunneling microscope resolve single atoms.',
+        },
+        {
+          title: 'Spreading and the Uncertainty Principle',
+          prompt:
+            'Choose "Free Wave Packet" (σ₀ = 0.6 nm) and watch σ(t) and Δx·Δp. Then set σ₀ = 1.5 nm and run it again.',
+          takeaway:
+            'With no forces at all, the 0.6 nm packet widens about 6× before it reaches the edge, while the 1.5 nm packet grows only ~1.3×. Squeezing a packet in space broadens its momentum spread, so its parts drift apart faster. Δx·Δp starts at its minimum ħ/2 and only grows.',
+        },
+        {
+          title: 'Two Barriers Beat One (Sometimes)',
+          prompt:
+            'Choose "Resonant Double Barrier" (E₀ = 2.38 eV) and compare T with the transmission spectrum. Then move E₀ to 2.0 eV and to 2.6 eV.',
+          takeaway:
+            'On resonance the packet passes ~34%, more than twice the ~13% one barrier alone would allow, because the wave bounces between the barriers and interferes constructively. Off resonance it drops below 1%. Resonant-tunneling diodes exploit these sharp peaks. The packet’s T stays below the plane-wave peak of 1 because only part of its energy spread fits inside the narrow resonance.',
         },
       ],
     },
