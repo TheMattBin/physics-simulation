@@ -9,6 +9,7 @@ import { HeatConductionLab } from './heat-conduction';
 import { WaveInterferenceLab } from './wave-interference';
 import { ChargedParticlesLab } from './charged-particles';
 import { QuantumTunnelingLab } from './quantum-tunneling';
+import { QuantumBoundStatesLab } from './quantum-bound-states';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -746,6 +747,81 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Choose "Resonant Double Barrier" (E₀ = 2.38 eV) and compare T with the transmission spectrum. Then move E₀ to 2.0 eV and to 2.6 eV.',
           takeaway:
             'On resonance the packet passes ~34%, more than twice the ~13% one barrier alone would allow, because the wave bounces between the barriers and interferes constructively. Off resonance it drops below 1%. Resonant-tunneling diodes exploit these sharp peaks. The packet’s T stays below the plane-wave peak of 1 because only part of its energy spread fits inside the narrow resonance.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'quantum-bound-states',
+    title: 'Bound States & Energy Quantization',
+    subtitle:
+      'Trap an electron in a box, a spring-like potential, a finite well or a double well. Only certain energies are allowed, and superpositions of them slosh, tunnel and revive.',
+    domain: 'quantum',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 6',
+    tags: ['Energy Levels', 'Superposition', 'Measurement', 'Quantum Revival', 'Double-Well Tunneling'],
+    equationPreview: '\\hat{H}\\varphi_n = E_n\\varphi_n, \\quad \\psi(t) = \\sum_n c_n \\varphi_n e^{-iE_n t/\\hbar}',
+    summary:
+      'Pick energy levels to build superpositions, measure energy or position to collapse the state, and watch a scrambled wave packet reassemble perfectly at the revival time.',
+    component: QuantumBoundStatesLab,
+    theory: {
+      overview:
+        'When an electron is confined, its wave must fit the trap, so only a discrete set of energies Eₙ is allowed. That is energy quantization, the origin of atomic spectra, quantum dots and lasers. Each allowed energy has a stationary state φₙ whose probability density never changes. Any other state is a superposition Σ cₙφₙ. Because each component’s phase rotates at its own rate Eₙ/ħ, superpositions move: the density sloshes at the Bohr frequencies (Eₙ − Eₘ)/h, which are exactly the frequencies of light the system absorbs or emits. Measuring the energy returns one Eₙ with probability |cₙ|² and leaves the electron in that stationary state.',
+      equations: [
+        {
+          label: 'Particle in a Box',
+          latex: 'E_n = \\frac{\\hbar^2\\pi^2 n^2}{2 m L^2}, \\qquad \\varphi_n(x) = \\sqrt{\\tfrac{2}{L}}\\,\\sin\\frac{n\\pi x}{L}',
+          explanation:
+            'A whole number of half-wavelengths must fit in the box. For an electron in a 1 nm box E₁ ≈ 0.38 eV, and the levels grow as n². There is no zero-energy state: confinement always costs kinetic energy.',
+        },
+        {
+          label: 'Harmonic Oscillator',
+          latex: 'E_n = \\hbar\\omega\\left(n + \\tfrac{1}{2}\\right), \\quad n = 0, 1, 2, \\ldots',
+          explanation:
+            'Evenly spaced levels mean every Bohr frequency is a multiple of ω. A displaced ground state (a coherent state) therefore swings back and forth forever without spreading, just like a classical pendulum.',
+        },
+        {
+          label: 'Time Evolution of a Superposition',
+          latex: '\\psi(x,t) = \\sum_n c_n\\,\\varphi_n(x)\\,e^{-iE_n t/\\hbar}, \\qquad P(E_n) = |c_n|^2',
+          explanation:
+            'For two levels the density oscillates with period h/|E₂ − E₁|. The lab evolves states exactly this way, so energy is conserved exactly and there is no time-step error.',
+        },
+        {
+          label: 'Quantum Revival (box)',
+          latex: 'T_{\\text{rev}} = \\frac{h}{E_1} = \\frac{4 m L^2}{\\pi\\hbar}',
+          explanation:
+            'Because every Eₙ is an integer multiple of E₁, all phases e^{−iEₙt/ħ} line up again after T_rev, and any packet reassembles exactly. At simple fractions of T_rev it appears as several smaller copies.',
+        },
+      ],
+      assumptions: [
+        'Box and oscillator use exact analytic eigenstates, so level spacings, oscillation periods and the revival are exact. Finite and double wells use eigenstates of a finite-difference Hamiltonian (Δx ≈ 3–5 pm), found by Sturm-sequence bisection and inverse iteration. Their energies match the continuum transcendental equations to within ~0.3 meV.',
+        'Time evolution is spectral, ψ(t) = Σ cₙφₙe^{−iEₙt/ħ}, which is exact for a time-independent potential. Packets are expanded in up to 60 levels, and the sidebar reports if the basis captures less than 100%.',
+        'The finite well sits inside a larger computational box (±4 nm) with hard walls. Only levels with E < 0 are truly bound. A sharp position measurement can kick part of the electron above the well, where it then bounces off those outer walls.',
+        'A position measurement is modelled as collapse to a 0.04 nm Gaussian at a position drawn from |ψ|². An energy measurement collapses exactly onto one eigenstate with probability |cₙ|².',
+        'One spinless, non-relativistic electron in one dimension. Simulated time runs 2 fs per second at 1x.',
+      ],
+      experiments: [
+        {
+          title: 'Stationary States and Collapse',
+          prompt:
+            'Choose "Particle in a Box" (n = 1 + 2) and compare the measured slosh period with h/ΔE. Press Measure Energy a few times, re-selecting n = 1 and 2 in between. Then try n = 1 + 3.',
+          takeaway:
+            'The superposition sloshes with period h/(E₂ − E₁) = 3.67 fs. A measurement returns E₁ or E₂ about half the time each, and afterwards the density freezes: a single level is a stationary state. With n = 1 + 3 the density "breathes" symmetrically instead of sloshing, because both states are even about the centre.',
+        },
+        {
+          title: 'Tunneling Back and Forth',
+          prompt:
+            'Choose "Double Well". The electron starts in the left well. Watch P(left half) and the space-time picture, then raise the Barrier Width from 0.12 to 0.20 nm.',
+          takeaway:
+            'The electron tunnels to the right well and back with period h/(E₂ − E₁) ≈ 13 fs, even though its energy is far below the barrier. Widening the barrier shrinks the splitting exponentially, and the period nearly doubles to ~25 fs. The ammonia maser and many qubit designs use this two-state tunneling.',
+        },
+        {
+          title: 'A Packet That Falls Apart, Then Reassembles',
+          prompt:
+            'Choose "Quantum Revival" and watch for about 11 fs (one revival time), using the space-time picture as a map. Then change the Box Width to 2 nm.',
+          takeaway:
+            'The packet bounces a few times, smears into an apparently random interference pattern, then reforms almost perfectly at T_rev = h/E₁ ≈ 11 fs. Two half-size copies appear at T_rev/2. The carpet’s fractal-looking pattern is a "quantum carpet". Doubling L makes T_rev four times longer (≈ 44 fs), since T_rev ∝ L².',
         },
       ],
     },

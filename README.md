@@ -24,6 +24,8 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
   Boris-pusher solver for the Lorentz force with real particles in SI units: cyclotron orbits (with an opposite-charge twin), E × B drift, a crossed-field velocity selector with a live speed spectrum, and a Bainbridge mass spectrometer that resolves the neon isotopes Ne-20, Ne-21 and Ne-22.
 - **Quantum Mechanics — Quantum Tunneling & Wave Packets**
   Crank–Nicolson solver for the 1D time-dependent Schrödinger equation (electron, nm/eV/fs units) with exactly tracked absorbing boundaries: free-packet spreading versus σ(t) theory, tunneling and above-barrier reflection, and resonant tunneling through a double barrier, with a live transmission spectrum T(E) and a classical-particle comparison.
+- **Quantum Mechanics — Bound States & Energy Quantization**
+  Exact spectral time evolution in a particle-in-a-box, harmonic oscillator, finite well and double well (analytic and Sturm-bisection eigenstates): clickable energy-level superpositions, energy and position measurements with collapse, double-well tunneling oscillations, coherent states, and a quantum revival with a live space-time "quantum carpet".
 
 ## Local Development
 
