@@ -11,6 +11,7 @@ import { ChargedParticlesLab } from './charged-particles';
 import { QuantumTunnelingLab } from './quantum-tunneling';
 import { QuantumBoundStatesLab } from './quantum-bound-states';
 import { HydrogenAtomLab } from './hydrogen-atom';
+import { ElectronDoubleSlitLab } from './electron-double-slit';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -898,6 +899,81 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Choose "Forbidden 2s → 1s" and watch the cloud, then press Emit Photon. Compare the 2p and 2s lifetimes by selecting each on its own.',
           takeaway:
             'In 2s + 1s the cloud only breathes in and out symmetrically. With no oscillating dipole, ⟨1s|r|2s⟩ = 0 and no single photon can be emitted. 2p decays in 1.6 ns, but 2s is metastable: real 2s atoms live ~0.12 s and finally decay by emitting two photons at once.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'electron-double-slit',
+    title: 'Electron Double Slit: Wave–Particle Duality',
+    subtitle:
+      'Send electrons through two slits one at a time. Each lands as a single dot, yet together they paint an interference pattern, until you try to watch which slit they use.',
+    domain: 'quantum',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 6',
+    tags: ['Wave–Particle Duality', 'Interference', 'Which-Path', 'Complementarity', 'Fresnel Diffraction'],
+    equationPreview: 'P(x) = |\\psi_1(x) + \\psi_2(x)|^2 \\neq |\\psi_1|^2 + |\\psi_2|^2',
+    summary:
+      'Electrons build an interference pattern dot by dot (Bach et al. 2013 geometry). Close a slit, switch on a which-path detector, or move the screen in close to see the slits’ shadows.',
+    component: ElectronDoubleSlitLab,
+    theory: {
+      overview:
+        'Feynman called the double-slit experiment the "only mystery" of quantum mechanics. Every electron is detected as a single dot at one place on the screen, so it behaves like a particle. But where the dots land follows |ψ₁ + ψ₂|²: the waves from both slits add before squaring, producing bright and dark fringes no particle picture can explain. The pattern appears even when electrons pass through one at a time, so each electron interferes with itself. If anything records which slit the electron used, the interference term disappears and the screen shows just the sum of two single-slit patterns. The more which-path information is available (D), the lower the fringe visibility (V), with V² + D² ≤ 1.',
+      equations: [
+        {
+          label: 'Adding Amplitudes, Not Probabilities',
+          latex: 'P(x) = |\\psi_1 + \\psi_2|^2 = |\\psi_1|^2 + |\\psi_2|^2 + 2\\,\\mathrm{Re}(\\psi_1^* \\psi_2)',
+          explanation:
+            'The last term is the interference. It makes some places on the screen less likely with both slits open than with just one, which is impossible for classical particles.',
+        },
+        {
+          label: 'de Broglie Wavelength & Fringe Spacing',
+          latex: '\\lambda = \\frac{h}{p}, \\qquad \\Delta x = \\frac{\\lambda L}{d}',
+          explanation:
+            'A 600 eV electron has λ ≈ 50 pm, about 10,000× shorter than visible light. That is why the slits must be nanometre-scale and the fringes are only tens of micrometres apart even with a 24 cm flight path.',
+        },
+        {
+          label: 'Single-Slit Envelope (far field)',
+          latex: 'P(x) \\propto \\cos^2\\!\\left(\\frac{\\pi d x}{\\lambda L}\\right)\\,\\mathrm{sinc}^2\\!\\left(\\frac{\\pi a x}{\\lambda L}\\right)',
+          explanation:
+            'The fringes sit under the diffraction envelope of one slit of width a, so about 2d/a fringes fit in the central band. The lab computes the exact Fresnel integrals instead, which reduce to this formula far from the slits.',
+        },
+        {
+          label: 'Which-Path Duality (Englert)',
+          latex: 'V^2 + D^2 \\le 1',
+          explanation:
+            'D measures how well a detector can tell which slit was used (0 = not at all, 1 = perfectly). Perfect which-path information (D = 1) forces zero fringe visibility.',
+        },
+      ],
+      assumptions: [
+        'Each slit’s contribution is the exact paraxial (Fresnel) diffraction integral of a uniformly lit top-hat slit, evaluated with Fresnel integrals C and S. It is valid from right behind the slits to the far field, where it matches the cos²·sinc² formula to better than 10⁻⁶.',
+        'Electrons arrive one at a time and never interact with each other. Each is detected at a position drawn at random from |ψ|². The vertical position along the long slits is uniform.',
+        'The de Broglie wavelength uses relativistic momentum, (pc)² = E² + 2E·mc². That changes λ by 0.03% at 600 eV and 2.4% at 50 keV.',
+        'A perfectly coherent, monochromatic beam and ideal slits with no charging. The which-path detector is modelled by its distinguishability D, which scales the interference term by V = √(1 − D²).',
+        'Default geometry follows Bach et al., New J. Phys. 15, 033018 (2013): 600 eV electrons, 62 nm slits 272 nm apart, detector 24 cm away. The side view of the apparatus is not to scale.',
+      ],
+      experiments: [
+        {
+          title: 'One Electron at a Time',
+          prompt:
+            'Choose "Double Slit (Bach 2013)" at 40 electrons per second and watch the first 50 dots. Then raise the rate to 1000 /s and compare the histogram with the |ψ|² prediction.',
+          takeaway:
+            'Early on the dots look random, and each electron arrives whole, in one place. After a few thousand, bright and dark fringes emerge exactly where |ψ₁ + ψ₂|² predicts, every 44 µm. No electron ever lands in the dark fringes, even though each one went through alone.',
+        },
+        {
+          title: 'Closing a Slit Adds Electrons to Dark Fringes',
+          prompt:
+            'Clear the screen and choose Left Only. Look at the positions that were dark fringes before. Then compare with Both Open.',
+          takeaway:
+            'With one slit open, electrons land at positions that were empty with two slits open. Opening a second path reduced the chance of arriving there, which only waves can do. The amber dashed curve shows what you would get if the probabilities simply added.',
+        },
+        {
+          title: 'Watching Destroys the Pattern',
+          prompt:
+            'Choose "Which-Path Detector" (D = 1), let it collect, and read the fringe contrast. Then lower D to 0.8 and 0.6, clearing the screen each time.',
+          takeaway:
+            'With perfect which-path information the fringes vanish and the screen shows two overlapping single-slit bands. Partial information leaves partial fringes: D = 0.8 gives V = 0.6, and D = 0.6 gives V = 0.8, following V² + D² = 1. Knowing the path and seeing interference are complementary.',
         },
       ],
     },

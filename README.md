@@ -28,6 +28,8 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
   Exact spectral time evolution in a particle-in-a-box, harmonic oscillator, finite well and double well (analytic and Sturm-bisection eigenstates): clickable energy-level superpositions, energy and position measurements with collapse, double-well tunneling oscillations, coherent states, and a quantum revival with a live space-time "quantum carpet".
 - **Quantum Mechanics — Schrödinger's Hydrogen Atom & Orbitals**
   Exact hydrogen eigenfunctions (n ≤ 4, real s/p/d/f orbitals) rendered as rotatable |ψ|²-sampled electron clouds and nodal slices, Bohr-orbit comparison, radial probability P(r), superpositions whose charge cloud oscillates at ΔE/h, computed dipole selection rules and radiative lifetimes, and an emission spectrum built photon by photon.
+- **Quantum Mechanics — Electron Double Slit: Wave–Particle Duality**
+  Electrons detected one at a time build an interference pattern (Bach et al. 2013 geometry). Exact Fresnel-integral diffraction from near field to far field, slit closing, a which-path detector obeying Englert's V² + D² ≤ 1, and a live histogram against the |ψ|² prediction.
 
 ## Local Development
 
