@@ -7,6 +7,7 @@ import { ProjectileDragLab } from './projectile-drag';
 import { NewtonsLawsLab } from './newtons-laws';
 import { HeatConductionLab } from './heat-conduction';
 import { WaveInterferenceLab } from './wave-interference';
+import { ChargedParticlesLab } from './charged-particles';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -595,6 +596,81 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Select "Snell’s Refraction" and sweep Medium Refractive Index n₂ from 1.00 up to 2.20.',
           takeaway:
             'Watch the wavefronts slow down, compress closer together (shorter λ), and pivot toward the interface normal—plus notice the faint partial reflection bouncing back into air!',
+        },
+      ],
+    },
+  },
+  {
+    id: 'charged-particles',
+    title: 'Charged Particles in E & B Fields',
+    subtitle:
+      'Steer protons and ions with the Lorentz force: cyclotron orbits, E × B drift, a velocity selector, and a mass spectrometer that separates the isotopes of neon.',
+    domain: 'electromagnetism',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 5',
+    tags: ['Lorentz Force', 'Cyclotron Motion', 'E × B Drift', 'Mass Spectrometry', 'Boris Pusher'],
+    equationPreview: '\\mathbf{F} = q\\left(\\mathbf{E} + \\mathbf{v} \\times \\mathbf{B}\\right)',
+    summary:
+      'Launch real particles (protons, alphas, H⁻ ions) at ~100 km/s through millitesla fields, then weigh neon isotopes the way J.J. Thomson did in 1913.',
+    component: ChargedParticlesLab,
+    theory: {
+      overview:
+        'Every electromagnetic effect on a charge is summarized by the Lorentz force. The electric part qE pushes along the field and changes the particle’s speed. The magnetic part qv × B is always perpendicular to the velocity, so it bends the path but never does work. In a uniform magnetic field this produces a circular orbit whose period does not depend on speed. Adding a perpendicular electric field makes the orbit drift sideways at E/B for every particle, whatever its charge or mass. Combining the two effects gives two classic instruments: a velocity selector that passes only one speed, and a mass spectrometer that sorts ions by mass.',
+      equations: [
+        {
+          label: 'Lorentz Force Law',
+          latex: 'm\\frac{d\\mathbf{v}}{dt} = q\\left(\\mathbf{E} + \\mathbf{v} \\times \\mathbf{B}\\right)',
+          explanation:
+            'Because v × B is perpendicular to v, the magnetic force does zero work (F·v = 0). Only the electric field can change a particle’s kinetic energy.',
+        },
+        {
+          label: 'Cyclotron Radius & Period',
+          latex: 'r_L = \\frac{m v_\\perp}{|q| B}, \\qquad T = \\frac{2\\pi m}{|q| B}',
+          explanation:
+            'Faster particles move on bigger circles but take exactly the same time per lap. That speed independence is why Lawrence’s cyclotron (1932) can use a fixed-frequency accelerating voltage.',
+        },
+        {
+          label: 'E × B Drift',
+          latex: '\\mathbf{v}_d = \\frac{\\mathbf{E} \\times \\mathbf{B}}{B^2}',
+          explanation:
+            'q and m cancel, so every particle drifts at the same velocity, perpendicular to both fields. Positive and negative charges loop in opposite senses but drift the same way.',
+        },
+        {
+          label: 'Velocity Selector + Mass Spectrometer',
+          latex: 'v = \\frac{E}{B_1}, \\qquad m = \\frac{q B_2 D}{2v} = \\frac{q B_1 B_2 D}{2E}',
+          explanation:
+            'Crossed fields pass only ions whose electric and magnetic forces cancel. A second field B₂ bends those ions on semicircles of diameter D = 2r ∝ m, so the landing position reveals the mass.',
+        },
+      ],
+      assumptions: [
+        'Solved with the Boris pusher (half electric kick, exact magnetic rotation, half electric kick). In a pure magnetic field speed is conserved to machine precision. In combined fields KE + qφ stays bounded instead of drifting.',
+        'Non-relativistic: at ~100 km/s, v/c ≈ 3 × 10⁻⁴ and the relativistic correction to the mass is below 10⁻⁷.',
+        'Uniform fields with sharp edges (no fringe fields at the ends of plates or magnets). Real instruments need edge corrections.',
+        'Single particles in vacuum: no collisions with gas, no space charge (ion–ion repulsion), and no radiation from the accelerating charge.',
+        'Motion stays in the plane perpendicular to B (no velocity component along B, so no helical motion). Simulated time runs 10⁶ times slower than real time: 1 µs per second at 1x.',
+      ],
+      experiments: [
+        {
+          title: 'The Speed-Independent Period',
+          prompt:
+            'Choose "Cyclotron Orbit" and read the radius and period. Raise Launch Speed from 100 to 150 km/s. Then set it back to 100, switch to Alpha α²⁺ (its orbit no longer fits), and double B to 40 mT.',
+          takeaway:
+            'At 150 km/s the radius grows 1.5× but the measured period stays at 3.28 µs: a bigger circle at a proportionally higher speed takes the same time. An alpha has twice the charge and four times the mass of a proton, so its m/q is twice as large. At double the field it retraces the proton’s circle with almost exactly the same period, because only m/q matters.',
+        },
+        {
+          title: 'A Drift That Ignores Charge',
+          prompt:
+            'Choose "E × B Drift" and turn on Opposite-Charge Twin. Watch the force vectors on the proton. Then set Launch Speed to 50 km/s (= E/B).',
+          takeaway:
+            'The twins loop in opposite directions, one above and one below, yet they drift the same way at E/B = 50 km/s, since flipping q flips both forces. At v₀ = E/B the electric and magnetic forces cancel exactly and the particle flies straight. That is the velocity selector in a nutshell.',
+        },
+        {
+          title: 'Weighing Neon Like J.J. Thomson',
+          prompt:
+            'Choose "Mass Spectrometer" and let the detector collect ions for 20–30 s (2x speed helps). Then change B₂ from 300 to 400 mT.',
+          takeaway:
+            'Natural neon splits into two clear peaks at 20 u and 22 u in a ~10:1 ratio, plus a faint Ne-21 trace. Thomson’s 1913 version of this experiment was the first evidence that a stable element can have isotopes. Raising B₂ shrinks every orbit, yet the calibrated masses stay put, because the measurement depends only on q, B₂, D and v.',
         },
       ],
     },

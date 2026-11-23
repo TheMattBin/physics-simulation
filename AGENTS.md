@@ -46,7 +46,8 @@ src/
     ├── entropy-diffusion/  # Tier 2: Many-body hard-sphere gas + spatial grid hashing
     ├── wind-tunnel/        # Tier 3: 2D D2Q9 Lattice Boltzmann fluid solver
     ├── heat-conduction/    # Tier 3: 2D finite-volume Fourier heat diffusion PDE
-    └── wave-interference/  # Tier 3: 2D FDTD scalar wave equation
+    ├── wave-interference/  # Tier 3: 2D FDTD scalar wave equation
+    └── charged-particles/  # Tier 1: Lorentz force via Boris pusher (cyclotron, E×B, selector, mass spec)
 ```
 
 ## How to Add a New Simulation

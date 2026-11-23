@@ -20,6 +20,8 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
   Interactive finite-volume 2D PDE sandbox supporting Copper, Steel, Glass, and adiabatic insulators; paint 100°C heat sources, 0°C sinks, and baffles while inspecting live Fourier heat flux vectors (`q = −k∇T`) and hover temperature probes.
 - **Waves & Optics — Wave Interference & Double-Slit Optics**
   2D FDTD scalar wave tank demonstrating Young's double-slit fringes, coherent point sources with phase shifting, single-slit diffraction, and Snell's Law refraction with a real-time optical detector screen `I(y)`.
+- **Electromagnetism — Charged Particles in E & B Fields**
+  Boris-pusher solver for the Lorentz force with real particles in SI units: cyclotron orbits (with an opposite-charge twin), E × B drift, a crossed-field velocity selector with a live speed spectrum, and a Bainbridge mass spectrometer that resolves the neon isotopes Ne-20, Ne-21 and Ne-22.
 
 ## Local Development
 

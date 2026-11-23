@@ -5,7 +5,8 @@ export type PhysicsDomain =
   | 'stat-mech'
   | 'thermodynamics'
   | 'fluids'
-  | 'waves';
+  | 'waves'
+  | 'electromagnetism';
 
 export type SimulationStatus = 'ready' | 'planned';
 
@@ -52,6 +53,13 @@ export const DOMAINS: Record<PhysicsDomain, DomainInfo> = {
     shortLabel: 'Waves',
     accent: '#f472b6',
     badgeClass: 'bg-pink-500/10 text-pink-300 border-pink-500/25',
+  },
+  electromagnetism: {
+    id: 'electromagnetism',
+    label: 'Electromagnetism',
+    shortLabel: 'E&M',
+    accent: '#fb7185',
+    badgeClass: 'bg-rose-500/10 text-rose-300 border-rose-500/25',
   },
 };
 
