@@ -14,6 +14,8 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
   Real-time D2Q9 Lattice Boltzmann fluid solver with cylinder, NACA airfoil (adjustable angle of attack), teardrop, flat plate, car coupe, and freehand paint/erase obstacles; visualizes vorticity curl, velocity, pressure fields, smoke streamlines, and live momentum-exchange drag (`C_D`) and lift (`C_L`).
 - **Classical Mechanics — Projectile Motion & Quadratic Air Drag**
   Simultaneous vacuum vs. quadratic-drag RK4 solver with headwind/tailwind control, optimal-angle sweep curves, live velocity/drag vectors, and speed decay toward terminal velocity.
+- **Classical Mechanics — Newton's Laws: Forces, Friction & Free-Body Diagrams**
+  Block on a ramp, push on a table, ramp with a hanging mass, and an Atwood machine, all solved with event-driven exact kinematics. Includes live free-body diagrams with optional gravity components, a ΣF = ma ledger, an automatic push ramp that shows the static-to-kinetic friction drop, nudges for Newton's 1st law, and Newton's 3rd-law force pairs.
 - **Thermodynamics — 2D Heat Equation & Thermal Diffusion**
   Interactive finite-volume 2D PDE sandbox supporting Copper, Steel, Glass, and adiabatic insulators; paint 100°C heat sources, 0°C sinks, and baffles while inspecting live Fourier heat flux vectors (`q = −k∇T`) and hover temperature probes.
 - **Waves & Optics — Wave Interference & Double-Slit Optics**

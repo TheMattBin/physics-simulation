@@ -41,6 +41,7 @@ src/
     ├── registry.ts         # Central catalog (metadata, KaTeX theory, assumptions, guided experiments)
     ├── double-pendulum/    # Tier 1: RK4 Lagrangian ODE
     ├── projectile-drag/    # Tier 1: RK4 quadratic aerodynamic drag
+    ├── newtons-laws/       # Tier 1: Forces, Coulomb friction & FBDs (event-driven exact kinematics)
     ├── heat-engine/        # Tier 1: Thermodynamic cycles (Carnot / Otto) + synced P-V diagram
     ├── entropy-diffusion/  # Tier 2: Many-body hard-sphere gas + spatial grid hashing
     ├── wind-tunnel/        # Tier 3: 2D D2Q9 Lattice Boltzmann fluid solver

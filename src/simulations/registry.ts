@@ -4,6 +4,7 @@ import { EntropyDiffusionLab } from './entropy-diffusion';
 import { HeatEngineLab } from './heat-engine';
 import { WindTunnelLab } from './wind-tunnel';
 import { ProjectileDragLab } from './projectile-drag';
+import { NewtonsLawsLab } from './newtons-laws';
 import { HeatConductionLab } from './heat-conduction';
 import { WaveInterferenceLab } from './wave-interference';
 
@@ -370,6 +371,84 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Select Baseball and set Wind Speed to −20 m/s (strong headwind) vs. +20 m/s (tailwind). Watch the red F_D vector and range.',
           takeaway:
             'Because drag scales with relative speed squared (v − v_w)², a headwind increases drag far more strongly than an equal tailwind reduces it!',
+        },
+      ],
+    },
+  },
+  {
+    id: 'newtons-laws',
+    title: "Newton's Laws: Forces, Friction & Free-Body Diagrams",
+    subtitle:
+      'Watch free-body diagrams update live on ramps, tables, pulleys, and an Atwood machine. Static friction adjusts, breaks away, and hands off to kinetic friction.',
+    domain: 'classical',
+    level: 'High School',
+    status: 'ready',
+    phase: 'Phase 5',
+    tags: ["Newton's Laws", 'Free-Body Diagrams', 'Friction', 'Atwood Machine'],
+    equationPreview: '\\sum \\mathbf{F} = m\\mathbf{a}',
+    summary:
+      'Push, tilt, and pull blocks while a live free-body diagram and a ΣF = ma ledger show every force, including the static-to-kinetic friction drop and the 3rd-law pairs.',
+    component: NewtonsLawsLab,
+    theory: {
+      overview:
+        "Newton's first law says an object keeps its velocity unless a net force acts. The second law says the net force sets the acceleration (ΣF = ma), not the velocity. The third law says forces come in equal and opposite pairs acting on different bodies. A free-body diagram is the bookkeeping tool that connects them: isolate one body, draw every force on it, sum the components along the direction of motion, and divide by mass. Friction is the subtle case. Static friction is not a fixed number; it grows to exactly cancel whatever is trying to move the block, up to a ceiling of μ_s N. Past that ceiling the block breaks free and the weaker kinetic friction μ_k N takes over.",
+      equations: [
+        {
+          label: "Newton's Second Law Along the Track",
+          latex:
+            '(m_1 + m_2)\\,a = F_{\\text{app}} + m_2 g - m_1 g\\sin\\theta + f',
+          explanation:
+            'Positive is up-slope, toward the pulley. The rope tension is internal to the block-plus-hanging-mass system, so it cancels. On m₁ alone the ledger reads F + T − m₁g sin θ + f = m₁a.',
+        },
+        {
+          label: 'Normal Force & Coulomb Friction',
+          latex:
+            'N = m_1 g\\cos\\theta, \\qquad |f_s| \\le \\mu_s N, \\qquad f_k = \\mu_k N',
+          explanation:
+            'Static friction takes any value up to μ_s N that keeps the block at rest. Once sliding, friction has the fixed magnitude μ_k N and opposes the velocity. Usually μ_k < μ_s.',
+        },
+        {
+          label: 'Angle of Repose',
+          latex: '\\tan\\theta_c = \\mu_s',
+          explanation:
+            'With no push and no rope, the block slips when m g sin θ exceeds μ_s m g cos θ. Mass and gravity cancel, so a brick and a pebble on the same surface slip at the same angle, on Earth or on the Moon.',
+        },
+        {
+          label: 'Atwood Machine',
+          latex:
+            'a = \\frac{m_2 - m_1}{m_1 + m_2}\\,g, \\qquad T = \\frac{2 m_1 m_2}{m_1 + m_2}\\,g',
+          explanation:
+            'Only the weight difference drives the motion, but both masses must be accelerated. Nearly equal masses therefore "dilute" gravity, which let George Atwood (1784) time a slowed-down free fall.',
+        },
+      ],
+      assumptions: [
+        'Forces are constant between events, so motion is integrated with exact constant-acceleration kinematics. Events (velocity passing through zero, which triggers the stick/slip test, and the ends of the track) are located analytically, so there is no time-step error.',
+        'Coulomb friction model with constant μ_s and μ_k (μ_k is capped at μ_s). No velocity dependence, stick-slip vibration, or air drag.',
+        'Rigid blocks that slide without tipping or rolling. The applied push acts parallel to the surface, so it does not change N.',
+        'Massless, inextensible rope parallel to the incline, over a massless, frictionless pulley, so the tension is the same on both sides.',
+        'The ends of the track are perfectly inelastic stops: the block stops dead and the stop supplies whatever force is needed to hold it there.',
+      ],
+      experiments: [
+        {
+          title: "Newton's First Law on Ice",
+          prompt:
+            'Choose "Push on Table", set μ_s = μ_k = 0, and press Nudge → Right. Watch the motion plot. Then raise μ_s and μ_k to 0.10, press Reset, and nudge again.',
+          takeaway:
+            'With ΣF = 0 the velocity line stays perfectly flat, so the block coasts without any force. Friction is the hidden force that makes everyday objects slow down. That is why it took Galileo and Newton to see that motion itself needs no cause; only changes in motion do.',
+        },
+        {
+          title: 'The Static-Friction Cliff',
+          prompt:
+            'Choose "Push on Table" (μ_s = 0.50, μ_k = 0.30, m₁ = 5 kg) and click Ramp Push. Watch the Friction f and Applied F traces in the force plot.',
+          takeaway:
+            'Friction rises in lockstep with the push, keeping ΣF = 0 (it is still static), until it hits μ_s N = 24.5 N. At that instant it drops to μ_k N = 14.7 N, the net force jumps, and the block lurches forward. This sudden release is the same stick-slip behavior behind squeaky doors, violin strings, and earthquakes.',
+        },
+        {
+          title: 'Atwood Machine: Diluting Gravity',
+          prompt:
+            'Choose "Atwood Machine" (m₁ = 2.0 kg, m₂ = 2.2 kg). Read the acceleration and tension, then turn on 3rd-Law Pairs. Finally set m₂ = 10 kg.',
+          takeaway:
+            'a ≈ 0.47 m/s², only about 5% of g, because a 2 N weight difference has to accelerate 4.2 kg. T sits between m₁g and m₂g and is identical on both sides of the massless rope. As m₂ grows, a approaches g and T approaches 2m₁g, never more.',
         },
       ],
     },
