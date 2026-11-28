@@ -53,7 +53,8 @@ src/
     ├── hydrogen-atom/      # Tier 2: Exact hydrogen orbitals, |ψ|² sampling, dipole selection rules & lifetimes
     ├── electron-double-slit/ # Tier 1: Fresnel-integral diffraction, single-electron detection, which-path duality
     ├── beam-bending/       # Tier 1: Euler–Bernoulli beams (Macaulay closed form), Jourawski shear, von Mises / timber checks
-    └── tensile-test/       # Tier 2: 1D volume-conserving viscoplastic bar — Lüders bands, Considère necking, Bridgman, fracture
+    ├── tensile-test/       # Tier 2: 1D volume-conserving viscoplastic bar — Lüders bands, Considère necking, Bridgman, fracture
+    └── reaction-kinetics/  # Tier 2: Reactive hard-disk gas (periodic, contact-replayed collisions) vs 2D collision theory, Arrhenius
 ```
 
 ## How to Add a New Simulation

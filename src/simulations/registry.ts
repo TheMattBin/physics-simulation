@@ -14,6 +14,7 @@ import { HydrogenAtomLab } from './hydrogen-atom';
 import { ElectronDoubleSlitLab } from './electron-double-slit';
 import { BeamBendingLab } from './beam-bending';
 import { TensileTestLab } from './tensile-test';
+import { ReactionKineticsLab } from './reaction-kinetics';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -1127,6 +1128,83 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Run steel with True Stress–Strain ON and watch the strain profile below the chart as the load passes its maximum. Then repeat with a gauge length of 25 mm and of 100 mm.',
           takeaway:
             'Up to the UTS the whole gauge stretches evenly. Just after it, strain piles up at mid-gauge while the rest stops (Considère). The engineering stress falls, but the true stress in the neck keeps rising to about 810 MPa (about 700 MPa after Bridgman’s correction). Because the neck’s stretch is local, elongation at break depends on the gauge length: 44 % at 25 mm, 40 % at 50 mm and 36 % at 100 mm. That is why standards fix L₀ (4 d₀ in ASTM E8).',
+        },
+      ],
+    },
+  },
+  {
+    id: 'reaction-kinetics',
+    title: 'Reaction Kinetics: Collisions, Barriers & Catalysts',
+    subtitle:
+      'Watch molecules collide and react one by one. Only collisions energetic enough to cross the barrier react, which explains rate laws, reaction order, the Arrhenius equation, catalysts and thermal runaway.',
+    domain: 'chemistry',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 8',
+    tags: ['Collision Theory', 'Rate Laws & Order', 'Arrhenius Equation', 'Catalysis', 'Thermal Runaway'],
+    equationPreview: 'k = A\\,e^{-E_a/RT}',
+    summary:
+      'A reactive gas of molecules in which A + B → C + D only when a collision beats the activation energy. Find the reaction order, build an Arrhenius plot from your own measured k, add a catalyst, and set off a thermal runaway.',
+    component: ReactionKineticsLab,
+    theory: {
+      overview:
+        'Why do reactions speed up so much when heated, and what does a catalyst actually do? Here the answer comes from the molecules themselves. A and B fly around a box as hard disks and react only if they collide hard enough: the kinetic energy of their approach along the line joining their centres must reach the activation energy Eₐ, and they must be suitably oriented (steric factor p). Most collisions just bounce. The share of collisions energetic enough is e^(−Eₐ/RT), which is why heating by a few hundred kelvin can multiply the rate many times, and why lowering Eₐ with a catalyst works so well. Counting molecules over time gives the rate law, its order and the rate constant; repeating at several temperatures gives an Arrhenius plot.',
+      equations: [
+        {
+          label: 'Rate Law & Integrated Forms',
+          latex:
+            '-\\frac{d[A]}{dt} = k[A][B] \\qquad \\frac{1}{[A]} = \\frac{1}{[A]_0} + kt \\qquad \\ln[A] = \\ln[A]_0 - k[B]_0\\,t',
+          explanation:
+            'One bimolecular step makes the rate proportional to both concentrations. With equal amounts, 1/[A] grows linearly in time (second order). With B in large excess, [B] barely changes, so ln[A] falls linearly (pseudo-first order). Concentrations here are molecules per nm² of the 2D box.',
+        },
+        {
+          label: 'Collision Theory (2D)',
+          latex: 'k = \\chi\\, p\\, d \\sqrt{\\frac{2\\pi RT}{\\mu}}\\; e^{-E_a/RT}',
+          explanation:
+            'd is the collision diameter, μ the reduced mass, p the steric factor and χ the dense-gas boost to the collision rate (about 1.2 here). The square root is the mean relative speed. The exponential is the share of collisions energetic enough to react.',
+        },
+        {
+          label: 'Boltzmann Share of Energetic Collisions',
+          latex: 'P\\left(E_{\\text{lc}} \\ge E_a\\right) = e^{-E_a/RT}',
+          explanation:
+            'In two dimensions the approach energy along the line of centres follows an exact exponential distribution with mean RT, so the share of collisions that can react is simply e^(−Eₐ/RT). For a 20 kJ/mol barrier that is 0.8 % at 500 K but 9 % at 1000 K.',
+        },
+        {
+          label: 'Arrhenius Equation',
+          latex: '\\ln k = \\ln A - \\frac{E_a}{R}\\cdot\\frac{1}{T}',
+          explanation:
+            'A plot of ln k against 1/T is nearly straight with slope −Eₐ/R. Because the collision rate itself grows as √T, the fitted (apparent) activation energy comes out about ½RT above the barrier: roughly 23 kJ/mol for a 20 kJ/mol barrier near 700 K.',
+        },
+      ],
+      assumptions: [
+        'Molecules are identical hard disks (d = 0.5 nm, M = 30 g/mol) in a periodic 32 × 18 nm box, so the box is a window into a larger, uniform gas. Motion is integrated in steps of at most 0.025 nm, and each collision is replayed from the exact moment of contact, so collision rates and energies match hard-disk theory to within about 1 %.',
+        'A reaction happens when an A–B collision’s line-of-centres energy reaches Eₐ, with probability p. The products C and D are identical disks. The reaction enthalpy is released into, or taken from, their separating motion, so momentum and total energy are conserved exactly.',
+        'Heat bath: each molecule meets an inert solvent or buffer gas about every 3 ps and leaves with fresh Maxwell velocities at the bath temperature (Andersen thermostat). The insulated box has no bath, so the gas heats or cools as it reacts.',
+        'The catalyst is modelled as an alternative pathway with a lower barrier and the same ΔH (a homogeneous catalyst). Real catalysts work through intermediates or surfaces, which are not simulated.',
+        'Theory curves use the 2D collision-theory k with Henderson’s contact value χ = (1 − 7η/16)/(1 − η)². When many collisions react (Eₐ below about 3RT), reactions remove the fastest molecules faster than collisions replace them, and the measured k falls up to about 8 % below theory (the Prigogine–Xhrouet effect). With about 300 molecules, counts fluctuate visibly around the rate law, as they really do in small systems.',
+        'Units are real (nm, ps, kJ/mol, K), but barriers are kept small (up to 40 kJ/mol) so reactions happen within picoseconds. Typical laboratory reactions have Eₐ = 50–100 kJ/mol and react in only about 1 of 10⁹ to 10¹⁸ collisions.',
+      ],
+      experiments: [
+        {
+          title: 'What Order Is It?',
+          prompt:
+            'Run Equal A and B to about 80 % conversion and switch the plot between ln[A] and 1/[A]. Then load B in Excess and compare the two plots again.',
+          takeaway:
+            'With equal amounts, 1/[A] vs t is the straight one (R² ≈ 0.99, against about 0.94 for ln[A]) and its slope is k: second order. With B in sixfold excess, [B] hardly changes, so ln[A] becomes the straight plot, with slope −k[B]₀. The same A + B step now looks first order. The order you measure depends on the conditions, not just on the molecules.',
+        },
+        {
+          title: 'Heat, Barriers and Catalysts',
+          prompt:
+            'Let Equal A and B collect 80 or more reactions and press “Add k to plot”. Repeat at 500 K and at 1000 K (the k measurement restarts whenever T changes). Then go back to 700 K, switch on the catalyst and watch the collision-energy histogram.',
+          takeaway:
+            'Going from 500 K to 1000 K multiplies k about 16× (0.006 → 0.096 nm²/ps), mostly because the share of collisions above Eₐ grows from 0.8 % to 9 %. The Arrhenius slope gives Eₐ ≈ 23 ± 1 kJ/mol: the 20 kJ/mol barrier plus ½RT from the √T in the collision rate. The catalyst lowers the barrier to 10 kJ/mol, so at 700 K the energetic share jumps from 3.2 % to 18 % and k rises 5.6×, while ΔH and the products stay the same.',
+        },
+        {
+          title: 'Thermal Runaway',
+          prompt:
+            'Load Thermal Runaway (insulated, ΔH = −25 kJ/mol, starting at 500 K) and watch the temperature trace in the amounts plot. Then switch the surroundings to Heat Bath with the same settings.',
+          takeaway:
+            'Each reaction releases heat that speeds up the next ones. The run crawls for about 100 ps, then the temperature shoots from about 600 K to 1600 K within 200 ps until the reactants run out, ending near 1960 K (the energy balance predicts 2000 K). In the heat bath the same reaction stays near 500 K, and only about a quarter of A has reacted after 800 ps. This feedback is why exothermic reactors need cooling.',
         },
       ],
     },
