@@ -36,6 +36,8 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
   Virtual testing machine pulling low-carbon steel, Al 6061-T6, annealed copper, Ti-6Al-4V and alumina. A volume-conserving, elastic–viscoplastic 1D bar (Swift hardening) produces the upper/lower yield point and a propagating Lüders band, necking at the Considère load, Bridgman-corrected true stress, and cup-and-cone or brittle fracture. Includes 0.2 % offset yield, resilience and toughness areas, unload/reload work hardening, the gauge-length dependence of elongation, and multi-material overlays.
 - **Chemistry — Reaction Kinetics: Collisions, Barriers & Catalysts**
   Reactive hard-disk gas in real units (nm, ps, kJ/mol) where A + B → C + D only when the line-of-centres collision energy beats Eₐ. Exact energy and momentum bookkeeping for exo- and endothermic steps, heat-bath or insulated surroundings (thermal runaway), a catalysed pathway, an optional reverse reaction that settles at K = e^(−ΔH/RT), live collision-energy histogram vs e^(−E/RT), rate-law order tests (ln[A] and 1/[A]), and an Arrhenius plot built from measured rate constants against 2D collision theory.
+- **Chemistry — Chemical Equilibrium & Le Chatelier**
+  Ideal-gas equilibria with real thermodynamic data: N₂O₄ ⇌ 2NO₂ in a syringe and water bath (draggable plunger, Beer–Lambert colour) and the Haber–Bosch ammonia reactor (Gillespie–Beattie K(T), constant pressure, condenser, iron catalyst). Change volume, pressure, temperature and amounts, add inert gas at constant V or P, and watch Q relax to K, forward and reverse rates meet, and the equilibrium yield maps respond.
 
 ## Local Development
 

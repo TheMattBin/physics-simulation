@@ -15,6 +15,7 @@ import { ElectronDoubleSlitLab } from './electron-double-slit';
 import { BeamBendingLab } from './beam-bending';
 import { TensileTestLab } from './tensile-test';
 import { ReactionKineticsLab } from './reaction-kinetics';
+import { ChemicalEquilibriumLab } from './chemical-equilibrium';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -1206,6 +1207,81 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Load Thermal Runaway (insulated, ΔH = −25 kJ/mol, starting at 500 K) and watch the temperature trace in the amounts plot. Then switch the surroundings to Heat Bath with the same settings.',
           takeaway:
             'Each reaction releases heat that speeds up the next ones. The run crawls for about 100 ps, then the temperature shoots from about 600 K to 1600 K within 200 ps until the reactants run out, ending near 1960 K (the energy balance predicts 2000 K). In the heat bath the same reaction stays near 500 K, and only about a quarter of A has reacted after 800 ps. This feedback is why exothermic reactors need cooling.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'chemical-equilibrium',
+    title: 'Chemical Equilibrium & Le Chatelier',
+    subtitle:
+      'Squeeze a syringe of brown NO₂, plunge it into ice or boiling water, and run the Haber–Bosch ammonia reactor. Watch the reaction quotient Q relax back to K after every disturbance.',
+    domain: 'chemistry',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 8',
+    tags: ['Le Chatelier', 'Equilibrium Constant', 'Reaction Quotient', 'van ’t Hoff', 'Haber–Bosch'],
+    equationPreview: 'Q \\to K = e^{-\\Delta G^\\circ/RT}',
+    summary:
+      'Disturb two classic equilibria with real thermodynamic data: N₂O₄ ⇌ 2NO₂ in a syringe and the Haber–Bosch synthesis of ammonia. Change volume, pressure, temperature and amounts, add inert gas or a catalyst, and watch Q relax to K while forward and reverse rates meet.',
+    component: ChemicalEquilibriumLab,
+    theory: {
+      overview:
+        'A reversible reaction never stops. It reaches a state where the forward and reverse reactions run at the same rate, so the composition holds still. The reaction quotient Q describes where a mixture is now; the equilibrium constant K, fixed by temperature alone, describes where it is heading. Le Chatelier’s principle sums up how an equilibrium responds to a disturbance: it shifts so as to partly undo it. Squeeze it and it makes fewer gas molecules; heat it and it runs in its endothermic direction; add a substance and it consumes some of it. Here you can disturb two classic systems, the brown NO₂/N₂O₄ mixture in a syringe and the Haber–Bosch ammonia synthesis, and watch Q relax back to K.',
+      equations: [
+        {
+          label: 'Reaction Quotient & Equilibrium Constant',
+          latex: 'Q = \\prod_i \\left(\\frac{p_i}{P^\\circ}\\right)^{\\nu_i}, \\qquad Q_{\\text{eq}} = K = e^{-\\Delta G^\\circ/RT}',
+          explanation:
+            'νᵢ are the stoichiometric coefficients, negative for reactants. For N₂O₄ ⇌ 2NO₂, Q = (p_NO₂/P°)² / (p_N₂O₄/P°). Q can take any value; only at equilibrium does it equal K.',
+        },
+        {
+          label: 'Which Way Will It Go?',
+          latex: '\\Delta G = RT \\ln\\frac{Q}{K}, \\qquad \\frac{r_{\\text{reverse}}}{r_{\\text{forward}}} = \\frac{Q}{K}',
+          explanation:
+            'If Q < K, ΔG < 0 and the reaction runs forward. If Q > K it runs backward. At Q = K the forward and reverse rates are equal: the equilibrium is dynamic, not stopped.',
+        },
+        {
+          label: 'Temperature: van ’t Hoff',
+          latex: '\\frac{d \\ln K}{dT} = \\frac{\\Delta H^\\circ}{RT^2}',
+          explanation:
+            'Only temperature changes K. For an endothermic reaction (ΔH° > 0, like N₂O₄ dissociating) K grows with T. For an exothermic one (ammonia synthesis, ΔH° ≈ −104 kJ near 700 K) K falls as T rises.',
+        },
+        {
+          label: 'Pressure & Moles of Gas',
+          latex: 'K = K_x \\left(\\frac{P}{P^\\circ}\\right)^{\\Delta n}',
+          explanation:
+            'K_x is the equilibrium ratio of mole fractions and Δn the change in the number of gas molecules (+1 for N₂O₄ → 2NO₂, −2 for N₂ + 3H₂ → 2NH₃). With K fixed, raising P must change K_x by P^(−Δn), favouring the side with fewer molecules. If Δn = 0, pressure has no effect.',
+        },
+      ],
+      assumptions: [
+        'Ideal gases. NO₂/N₂O₄ uses standard 298 K data (ΔH° = +57.2 kJ/mol, ΔS° = +175.8 J/(mol·K)), which holds well over 0–100 °C. Ammonia uses the Gillespie–Beattie correlation for K(T), which reproduces K_p = 1.6 × 10⁻⁴ atm⁻² at 400 °C. At 200–400 bar real gases deviate from ideal (fugacity), so real yields are a few percentage points higher than shown.',
+        'The syringe sits in the water bath at fixed temperature, with its volume set by the plunger. The reactor is held at fixed temperature and pressure, and its volume follows; this is why argon dilutes the reactor but not the syringe.',
+        'The kinetics are illustrative. NO₂/N₂O₄ uses elementary steps with a 57 kJ/mol dissociation barrier, slowed about a million-fold so that the real microsecond relaxation takes about a second. Ammonia uses a simple driving-force rate law with an iron-catalyst activation energy of 75 kJ/mol (230 kJ/mol without catalyst). In both, the reverse rate is the forward rate × Q/K, so equilibrium lands exactly where thermodynamics puts it.',
+        'Each dot stands for many molecules (the amount is shown in the corner). Dots react only as the solver dictates: net changes are replayed as forward (yellow) or reverse (blue) events, and at equilibrium matched forward and reverse events keep appearing at the solver’s actual, equal rates.',
+        'The syringe colour follows Beer–Lambert absorption by brown NO₂ (N₂O₄ is colourless). Condensing removes 90 % of the NH₃ at once, as the cooler of a real recycle loop does.',
+      ],
+      experiments: [
+        {
+          title: 'Squeeze the Syringe',
+          prompt:
+            'Let the syringe settle at 50 mL and 25 °C, then drag the plunger to 25 mL. Watch the colour, the NO₂ concentration and the Q vs K plot.',
+          takeaway:
+            'Halving the volume doubles every concentration at once, so the gas turns darker ([NO₂] 13.9 → 27.8 mM) and Q jumps to twice K. The mixture responds by pairing NO₂ into colourless N₂O₄, the side with fewer molecules, and [NO₂] settles at 20.2 mM: lighter than at the moment of squeezing, but still darker than before. The dissociation falls from 17 % to 13 %. K itself never changed.',
+        },
+        {
+          title: 'Ice Bath, Boiling Bath',
+          prompt:
+            'Use the Ice bath and Boiling buttons and compare the colour, K and the dissociation. Then, at room temperature, add 1 mmol of argon.',
+          takeaway:
+            'Splitting N₂O₄ absorbs heat (ΔH° = +57.2 kJ/mol), so heating favours brown NO₂. K rises from 0.017 at 0 °C to 14.9 at 100 °C (about 860×) and the dissociation from 7 % to 79 %. Temperature is the only change that alters K itself. Argon added at fixed volume raises the total pressure but changes none of the partial pressures, so nothing shifts.',
+        },
+        {
+          title: 'The Haber–Bosch Compromise',
+          prompt:
+            'Switch to Haber–Bosch (200 bar, 450 °C) and let it settle. Then try 300 °C, then 400 bar, condense out the NH₃, add argon, and switch off the catalyst.',
+          takeaway:
+            'At 450 °C and 200 bar only 24 % of the gas is NH₃ at equilibrium. At 300 °C it would be 61 %, but the catalysed reaction runs about 26× slower, which is why plants operate at 400–450 °C. Raising the pressure to 400 bar lifts the yield to 35 %, because 4 molecules become 2. Condensing out NH₃ drops Q below K, so more N₂ and H₂ react. Argon at constant pressure dilutes the mixture and pushes it back. Without the catalyst nothing happens, yet K is unchanged: a catalyst speeds up both directions equally.',
         },
       ],
     },

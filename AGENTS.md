@@ -54,7 +54,8 @@ src/
     ├── electron-double-slit/ # Tier 1: Fresnel-integral diffraction, single-electron detection, which-path duality
     ├── beam-bending/       # Tier 1: Euler–Bernoulli beams (Macaulay closed form), Jourawski shear, von Mises / timber checks
     ├── tensile-test/       # Tier 2: 1D volume-conserving viscoplastic bar — Lüders bands, Considère necking, Bridgman, fracture
-    └── reaction-kinetics/  # Tier 2: Reactive hard-disk gas (periodic, contact-replayed collisions) vs 2D collision theory, Arrhenius
+    ├── reaction-kinetics/  # Tier 2: Reactive hard-disk gas (periodic, contact-replayed collisions) vs 2D collision theory, Arrhenius
+    └── chemical-equilibrium/ # Tier 1: Ideal-gas equilibria (NO₂/N₂O₄, Haber–Bosch) — Q vs K, Le Chatelier, r_r = r_f·Q/K kinetics
 ```
 
 ## How to Add a New Simulation
