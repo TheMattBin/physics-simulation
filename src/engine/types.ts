@@ -9,7 +9,8 @@ export type PhysicsDomain =
   | 'electromagnetism'
   | 'quantum'
   | 'mechanical'
-  | 'chemistry';
+  | 'chemistry'
+  | 'relativity';
 
 export type SimulationStatus = 'ready' | 'planned';
 
@@ -84,6 +85,13 @@ export const DOMAINS: Record<PhysicsDomain, DomainInfo> = {
     shortLabel: 'Chemistry',
     accent: '#2dd4bf',
     badgeClass: 'bg-teal-500/10 text-teal-300 border-teal-500/25',
+  },
+  relativity: {
+    id: 'relativity',
+    label: 'Relativity & Astrophysics',
+    shortLabel: 'Relativity',
+    accent: '#818cf8',
+    badgeClass: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/25',
   },
 };
 

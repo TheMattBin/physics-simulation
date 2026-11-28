@@ -55,7 +55,9 @@ src/
     ├── beam-bending/       # Tier 1: Euler–Bernoulli beams (Macaulay closed form), Jourawski shear, von Mises / timber checks
     ├── tensile-test/       # Tier 2: 1D volume-conserving viscoplastic bar — Lüders bands, Considère necking, Bridgman, fracture
     ├── reaction-kinetics/  # Tier 2: Reactive hard-disk gas (periodic, contact-replayed collisions) vs 2D collision theory, Arrhenius
-    └── chemical-equilibrium/ # Tier 1: Ideal-gas equilibria (NO₂/N₂O₄, Haber–Bosch) — Q vs K, Le Chatelier, r_r = r_f·Q/K kinetics
+    ├── chemical-equilibrium/ # Tier 1: Ideal-gas equilibria (NO₂/N₂O₄, Haber–Bosch) — Q vs K, Le Chatelier, r_r = r_f·Q/K kinetics
+    ├── special-relativity/ # Tier 1: Lorentz boosts, Minkowski diagrams, Rindler Twin Paradox, Barn–Pole & cosmic muons
+    └── black-hole-geodesics/ # Tier 2: Schwarzschild timelike & null geodesics — precession, ISCO, horizon plunge & Einstein rings
 ```
 
 ## How to Add a New Simulation
