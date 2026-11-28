@@ -32,6 +32,8 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
   Electrons detected one at a time build an interference pattern (Bach et al. 2013 geometry). Exact Fresnel-integral diffraction from near field to far field, slit closing, a which-path detector obeying Englert's V² + D² ≤ 1, and a live histogram against the |ψ|² prediction.
 - **Mechanical Engineering — Beam Bending, Shear & Stress**
   Exact Euler–Bernoulli solver (Macaulay brackets) for simply supported, cantilever and overhanging beams with I-beam, rectangle, box and pipe sections in steel, aluminium, titanium or glulam timber. Live stress field on the deflected beam, synchronized V(x), M(x) and w(x) diagrams, a cross-section inspector with σ = My/I and Jourawski τ = VQ/Ib profiles, von Mises (or timber bending/shear) safety factors, serviceability L/δ, a rolling load with its moment envelope, and the exact fundamental frequency.
+- **Mechanical Engineering — Tensile Test: Stress–Strain, Yield & Necking**
+  Virtual testing machine pulling low-carbon steel, Al 6061-T6, annealed copper, Ti-6Al-4V and alumina. A volume-conserving, elastic–viscoplastic 1D bar (Swift hardening) produces the upper/lower yield point and a propagating Lüders band, necking at the Considère load, Bridgman-corrected true stress, and cup-and-cone or brittle fracture. Includes 0.2 % offset yield, resilience and toughness areas, unload/reload work hardening, the gauge-length dependence of elongation, and multi-material overlays.
 
 ## Local Development
 

@@ -13,6 +13,7 @@ import { QuantumBoundStatesLab } from './quantum-bound-states';
 import { HydrogenAtomLab } from './hydrogen-atom';
 import { ElectronDoubleSlitLab } from './electron-double-slit';
 import { BeamBendingLab } from './beam-bending';
+import { TensileTestLab } from './tensile-test';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -1050,6 +1051,82 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Load Overhang Balance (12 kN/m over 10 m). Slide Support B from 0.60 L towards 0.95 L while watching the moment diagram, and find the position that makes the largest |M| as small as possible.',
           takeaway:
             'At 0.60 L the hogging moment over the overhang dominates (−96 kN·m). Near 0.95 L the beam is almost simply supported (+135 kN·m sagging). The optimum is where hogging over B equals sagging in the span, at b = L/√2 ≈ 0.707 L. There |M| is only 51.5 kN·m, about a third of the 150 kN·m (qL²/8) of the same beam supported at its ends.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'tensile-test',
+    title: 'Tensile Test: Stress–Strain, Yield & Necking',
+    subtitle:
+      'Pull steel, aluminium, copper, titanium and a ceramic apart in a virtual testing machine. Yielding, necking and fracture emerge from the material model, not from a drawn curve.',
+    domain: 'mechanical',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 7',
+    tags: ['Stress–Strain Curve', 'Yield & UTS', 'Necking (Considère)', 'Lüders Bands', 'True Stress & Bridgman'],
+    equationPreview: '\\sigma_t = \\sigma_e(1+e), \\qquad \\frac{d\\sigma_t}{d\\varepsilon_t} = \\sigma_t',
+    summary:
+      'Pull a specimen to fracture and read off E, yield strength, UTS, elongation and toughness. Watch a Lüders band sweep through steel and a neck form at the maximum load, unload and reload to see work hardening, and compare five materials on one chart.',
+    component: TensileTestLab,
+    theory: {
+      overview:
+        'The tensile test is the workhorse of materials engineering. A specimen is pulled at a steady rate while a load cell measures the force and an extensometer measures the stretch. The stress–strain curve shows, in order: a straight elastic line (Hooke’s law, slope E); yielding, where dislocations start to move (low-carbon steel shows a sharp upper yield point and a Lüders band that sweeps along the bar); uniform plastic stretching with strain hardening; necking at the maximum load; and fracture. Engineering stress divides the force by the original area, so it falls once the neck forms, while the true stress in the neck keeps rising until the specimen breaks. One curve gives stiffness, yield strength, tensile strength, ductility and toughness.',
+      equations: [
+        {
+          label: 'Engineering vs. True Stress & Strain',
+          latex: '\\sigma_e = \\frac{F}{A_0},\\;\\; e = \\frac{\\Delta L}{L_0} \\qquad \\sigma_t = \\frac{F}{A} = \\sigma_e(1+e),\\;\\; \\varepsilon_t = \\ln(1+e)',
+          explanation:
+            'Plastic flow conserves volume (A·L = A₀·L₀), which gives these conversions. They hold only while the gauge stretches uniformly. After necking, the true values must come from the neck’s own area, ε_t = ln(A₀/A).',
+        },
+        {
+          label: 'Hooke’s Law, 0.2 % Offset & Resilience',
+          latex: '\\sigma = E\\,e, \\qquad \\sigma_y:\\; \\sigma = E\\,(e - 0.002), \\qquad U_r = \\frac{\\sigma_y^2}{2E}',
+          explanation:
+            'Metals without a sharp yield point are given a yield strength where the curve crosses a line parallel to the elastic slope, offset by 0.2 % strain. The resilience is the elastic energy per volume stored up to yield.',
+        },
+        {
+          label: 'Strain Hardening & Considère’s Criterion',
+          latex: '\\sigma_t = K(\\varepsilon_0 + \\varepsilon_p)^n, \\qquad \\frac{d\\sigma_t}{d\\varepsilon_t} = \\sigma_t \\;\\Rightarrow\\; \\varepsilon_u \\approx n',
+          explanation:
+            'The load F = σ_t·A peaks when hardening can no longer make up for the shrinking area. For this power-law (Swift) curve that happens at a true strain of about n, the hardening exponent. So high-n copper stretches uniformly much further than low-n titanium.',
+        },
+        {
+          label: 'Toughness & Bridgman’s Neck Correction',
+          latex: 'U_T = \\int_0^{e_f} \\sigma_e\\,de, \\qquad \\sigma_{\\text{flow}} = \\frac{F/A}{(1 + 2R/a)\\,\\ln(1 + a/2R)}',
+          explanation:
+            'Toughness is the energy absorbed per volume up to fracture (1 MJ/m³ = 1 J/cm³). The stress in a neck is triaxial, so the average axial stress F/A overestimates the flow stress. Bridgman’s factor, with neck radius a and profile radius R, corrects for this.',
+        },
+      ],
+      assumptions: [
+        'The gauge length is a 1D bar of 80 slices that carry the same force and conserve volume. Grips, shoulders and the testing machine are rigid, and the extensometer spans the whole gauge length. Lateral contraction is followed only through each slice’s area.',
+        'Each slice is elastic–viscoplastic: Hooke’s law plus plastic flow at a rate ∝ (σ_eq/σ_flow)^(1/m), with Swift hardening and m = 0.005. The rate is referenced to the nominal strain rate, so the curve does not depend on the crosshead speed.',
+        'A smooth 0.5 % dip in area, about one diameter wide, at mid-gauge seeds the neck. Real necks are shaped by 3D geometry that a 1D model cannot capture, so the dip was sized to give handbook elongations for the standard 12.5 mm × 50 mm specimen. Trends with L₀ and d₀ then follow from the model.',
+        'Neck triaxiality uses Bridgman’s factor with the empirical neck shape a/R = 1.1(ε − ε_u) (Le Roy et al., 1981), where ε − ε_u is the extra strain in the neck. Unloading is purely elastic (no Bauschinger effect or hysteresis).',
+        'Yield-point steel: a slice must reach the upper yield stress unless a neighbouring slice has already yielded, which lets Lüders band fronts run along the bar at the lower yield stress. Real plateaus show small serrations that this model smooths out.',
+        'Ductile slices break when the neck’s true strain reaches ln(1/(1 − RA)) for the material’s typical reduction of area. The ceramic breaks at a fixed 260 MPa, although real ceramics scatter widely (Weibull statistics). Properties are representative room-temperature handbook values, not certified data.',
+      ],
+      experiments: [
+        {
+          title: 'Strong, Stiff, Ductile or Tough?',
+          prompt:
+            'Press Overlay All Materials (or run each material in turn). Compare the slopes, the peak heights, how far each curve reaches, and the area under it. Which material is stiffest, strongest, most ductile and toughest?',
+          takeaway:
+            'Alumina is the stiffest (E = 370 GPa) yet breaks at 0.07 % strain. Titanium is the strongest (UTS 951 MPa) but stretches only 12 %. Copper is weak (228 MPa) but stretches 60 %. Steel combines strength and ductility and is the toughest: 156 MJ/m³, about 1,700 times alumina’s 0.09 MJ/m³. Stiffness, strength, ductility and toughness are four different properties.',
+        },
+        {
+          title: 'Cold Work: Unload and Reload',
+          prompt:
+            'Run steel and press Unload to Zero when the strain reaches about 10 %. Read the permanent set, then press ▶ to reload and watch where the line bends over again.',
+          takeaway:
+            'Unloading follows a straight line with slope E, leaving a permanent set of about 9.8 %. On reloading the steel stays elastic up to about 394 MPa, far above its original 290 MPa yield: strain hardening (cold work) has raised the yield strength. The curve then rejoins the original one with the same UTS (415 MPa) and elongation (39.6 %). The metal remembers its plastic strain, not the cycle.',
+        },
+        {
+          title: 'The Neck and the Gauge Length',
+          prompt:
+            'Run steel with True Stress–Strain ON and watch the strain profile below the chart as the load passes its maximum. Then repeat with a gauge length of 25 mm and of 100 mm.',
+          takeaway:
+            'Up to the UTS the whole gauge stretches evenly. Just after it, strain piles up at mid-gauge while the rest stops (Considère). The engineering stress falls, but the true stress in the neck keeps rising to about 810 MPa (about 700 MPa after Bridgman’s correction). Because the neck’s stretch is local, elongation at break depends on the gauge length: 44 % at 25 mm, 40 % at 50 mm and 36 % at 100 mm. That is why standards fix L₀ (4 d₀ in ASTM E8).',
         },
       ],
     },
