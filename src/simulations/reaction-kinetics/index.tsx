@@ -17,6 +17,8 @@ import {
   AREA,
   ReactionGas,
   effectiveBarrier,
+  equilibriumConstant,
+  equilibriumExtent,
   forwardRateConstant,
   fractionAbove,
   theoryFractionAbove,
@@ -25,7 +27,7 @@ import {
   type KineticsParams,
 } from './physics';
 
-type PresetId = 'second' | 'excess' | 'catalyst' | 'runaway';
+type PresetId = 'second' | 'excess' | 'catalyst' | 'runaway' | 'reversible';
 
 const SECOND: KineticsParams = {
   nA: 150,
@@ -49,6 +51,7 @@ const PRESETS: { id: PresetId; label: string; params: KineticsParams }[] = [
     label: 'Thermal Runaway',
     params: { ...SECOND, nA: 130, nB: 130, temperature: 500, activationEnergy: 25, enthalpy: -25, thermal: 'adiabatic' },
   },
+  { id: 'reversible', label: 'Reversible ⇌', params: { ...SECOND, activationEnergy: 15, enthalpy: -5, reversible: true } },
 ];
 
 const PS_PER_SECOND = 25; // simulated picoseconds per real second at 1×
@@ -243,6 +246,11 @@ export function ReactionKineticsLab({ meta }: { meta: SimulationEntry }) {
   const tHalf = halfLife(p, p.thermal === 'isothermal' ? p.temperature : gasRef.current.initial.T);
   const nLimit = Math.min(gasRef.current.initial.nA, gasRef.current.initial.nB);
   const conversion = nLimit > 0 ? tm.counts[2] / nLimit : 0;
+  const Keq = equilibriumConstant(Tref, p);
+  const eqConversion =
+    nLimit > 0 ? equilibriumExtent(Keq, gasRef.current.initial.nA, gasRef.current.initial.nB) / nLimit : 0;
+  const [cA, cB, cC, cD] = tm.counts;
+  const Qnow = cA * cB > 0 ? (cC * cD) / (cA * cB) : Infinity;
   const fmtK = (k: number) => (k >= 0.01 ? k.toFixed(4) : k.toExponential(2));
 
   const button = (active: boolean) =>
@@ -352,15 +360,28 @@ export function ReactionKineticsLab({ meta }: { meta: SimulationEntry }) {
             value={(100 * conversion).toFixed(0)}
             unit="%"
             color="#34d399"
-            sublabel={`${tm.counts[2]} of ${nLimit} limiting molecules reacted`}
+            sublabel={
+              p.reversible
+                ? `equilibrium: ${(100 * eqConversion).toFixed(0)} % (K = e^(−ΔH/RT))`
+                : `${tm.counts[2]} of ${nLimit} limiting molecules reacted`
+            }
           />
-          <MetricCard
-            label="Half-Life (rate law)"
-            value={Number.isFinite(tHalf) && tHalf < 1e6 ? tHalf.toFixed(0) : '∞'}
-            unit="ps"
-            color="#38bdf8"
-            sublabel={p.thermal === 'isothermal' ? 'of the limiting reactant' : 'at the starting temperature'}
-          />
+          {p.reversible ? (
+            <MetricCard
+              label="Q = [C][D] / [A][B]"
+              value={Number.isFinite(Qnow) ? Qnow.toFixed(2) : '∞'}
+              color="#38bdf8"
+              sublabel={`K = e^(−ΔH/RT) = ${Keq.toFixed(2)} at equilibrium`}
+            />
+          ) : (
+            <MetricCard
+              label="Half-Life (rate law)"
+              value={Number.isFinite(tHalf) && tHalf < 1e6 ? tHalf.toFixed(0) : '∞'}
+              unit="ps"
+              color="#38bdf8"
+              sublabel={p.thermal === 'isothermal' ? 'of the limiting reactant' : 'at the starting temperature'}
+            />
+          )}
           <MetricCard
             label="k (collision theory)"
             value={fmtK(kTheory)}
@@ -463,6 +484,9 @@ export function ReactionKineticsLab({ meta }: { meta: SimulationEntry }) {
             hint="Share of energetic collisions that also have a reactive orientation"
             onChange={(stericFactor) => update({ stericFactor })}
           />
+          <button type="button" onClick={() => update({ reversible: !p.reversible })} className={button(p.reversible)}>
+            Reverse Reaction (C + D → A + B): {p.reversible ? 'ON' : 'OFF'}
+          </button>
           <div className="space-y-2">
             <button type="button" onClick={() => update({ catalyst: !p.catalyst })} className={button(p.catalyst)}>
               Catalyst: {p.catalyst ? `ON (Eₐ ${p.activationEnergy} → ${Ea.toFixed(0)} kJ/mol)` : 'OFF'}

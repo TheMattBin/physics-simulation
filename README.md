@@ -35,7 +35,7 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
 - **Mechanical Engineering — Tensile Test: Stress–Strain, Yield & Necking**
   Virtual testing machine pulling low-carbon steel, Al 6061-T6, annealed copper, Ti-6Al-4V and alumina. A volume-conserving, elastic–viscoplastic 1D bar (Swift hardening) produces the upper/lower yield point and a propagating Lüders band, necking at the Considère load, Bridgman-corrected true stress, and cup-and-cone or brittle fracture. Includes 0.2 % offset yield, resilience and toughness areas, unload/reload work hardening, the gauge-length dependence of elongation, and multi-material overlays.
 - **Chemistry — Reaction Kinetics: Collisions, Barriers & Catalysts**
-  Reactive hard-disk gas in real units (nm, ps, kJ/mol) where A + B → C + D only when the line-of-centres collision energy beats Eₐ. Exact energy and momentum bookkeeping for exo- and endothermic steps, heat-bath or insulated surroundings (thermal runaway), a catalysed pathway, live collision-energy histogram vs e^(−E/RT), rate-law order tests (ln[A] and 1/[A]), and an Arrhenius plot built from measured rate constants against 2D collision theory.
+  Reactive hard-disk gas in real units (nm, ps, kJ/mol) where A + B → C + D only when the line-of-centres collision energy beats Eₐ. Exact energy and momentum bookkeeping for exo- and endothermic steps, heat-bath or insulated surroundings (thermal runaway), a catalysed pathway, an optional reverse reaction that settles at K = e^(−ΔH/RT), live collision-energy histogram vs e^(−E/RT), rate-law order tests (ln[A] and 1/[A]), and an Arrhenius plot built from measured rate constants against 2D collision theory.
 
 ## Local Development
 

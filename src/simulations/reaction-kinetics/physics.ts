@@ -90,6 +90,18 @@ export function forwardRateConstant(T: number, params: KineticsParams): number {
   return rateConstant(T, effectiveBarrier(params), params.stericFactor, params.nA + params.nB);
 }
 
+/** Equilibrium constant of A + B ⇌ C + D for identical molecules (no entropy change): K = e^(−ΔH/RT). */
+export function equilibriumConstant(T: number, params: KineticsParams): number {
+  return Math.exp(-params.enthalpy / (R_KJ * T));
+}
+
+/** Equilibrium extent from nA, nB (no C or D at the start): K = ξ² / ((a − ξ)(b − ξ)). */
+export function equilibriumExtent(K: number, a: number, b: number): number {
+  if (Math.abs(K - 1) < 1e-12) return (a * b) / (a + b);
+  const disc = K * K * (a + b) ** 2 - 4 * (K - 1) * K * a * b;
+  return (K * (a + b) - Math.sqrt(Math.max(0, disc))) / (2 * (K - 1));
+}
+
 export function reverseRateConstant(T: number, params: KineticsParams): number {
   return rateConstant(T, effectiveBarrier(params) - params.enthalpy, params.stericFactor, params.nA + params.nB);
 }
@@ -143,7 +155,7 @@ export class ReactionGas {
   reverse = 0;
   collisions = 0;
   collisionsAB = 0;
-  /** Rate-constant measurement window: reactions and the exposure ∫ N_A N_B / Area dt since it opened. */
+  /** Forward rate-constant measurement window: forward reactions and the exposure ∫ N_A N_B / Area dt since it opened. */
   window = { start: 0, reactions: 0, exposure: 0, tempIntegral: 0, collisionsAB: 0 };
   /** Line-of-centres energies [kJ/mol] of recent A–B collisions. */
   readonly energies = new Float32Array(6000);
@@ -444,7 +456,6 @@ export class ReactionGas {
         this.counts[SPECIES.D]--;
         this.counts[SPECIES.A]++;
         this.counts[SPECIES.B]++;
-        this.window.reactions--;
       } else {
         this.forward++;
         this.counts[SPECIES.A]--;

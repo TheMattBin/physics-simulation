@@ -635,6 +635,7 @@ export function drawEnergyProfile(ctx: CanvasRenderingContext2D, w: number, h: n
   ]);
   ctx.setLineDash([]);
   arrowV(0.42, 0, Ea, '#fbbf24', `Eₐ ${Ea.toFixed(0)}`, 'left');
+  if (p.reversible) arrowV(0.58, p.enthalpy, Ea, '#7dd3fc', `Eₐ,rev ${(Ea - p.enthalpy).toFixed(0)}`, 'right');
   arrowV(0.9, 0, p.enthalpy, p.enthalpy < 0 ? '#fb7185' : '#7dd3fc', `ΔH ${p.enthalpy > 0 ? '+' : ''}${p.enthalpy}`, 'left');
   ctx.font = `bold 10.5px ${MONO}`;
   ctx.textAlign = 'center';
