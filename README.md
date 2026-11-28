@@ -30,6 +30,8 @@ A sleek, dark-mode interactive physics laboratory built for high school and univ
   Exact hydrogen eigenfunctions (n ≤ 4, real s/p/d/f orbitals) rendered as rotatable |ψ|²-sampled electron clouds and nodal slices, Bohr-orbit comparison, radial probability P(r), superpositions whose charge cloud oscillates at ΔE/h, computed dipole selection rules and radiative lifetimes, and an emission spectrum built photon by photon.
 - **Quantum Mechanics — Electron Double Slit: Wave–Particle Duality**
   Electrons detected one at a time build an interference pattern (Bach et al. 2013 geometry). Exact Fresnel-integral diffraction from near field to far field, slit closing, a which-path detector obeying Englert's V² + D² ≤ 1, and a live histogram against the |ψ|² prediction.
+- **Mechanical Engineering — Beam Bending, Shear & Stress**
+  Exact Euler–Bernoulli solver (Macaulay brackets) for simply supported, cantilever and overhanging beams with I-beam, rectangle, box and pipe sections in steel, aluminium, titanium or glulam timber. Live stress field on the deflected beam, synchronized V(x), M(x) and w(x) diagrams, a cross-section inspector with σ = My/I and Jourawski τ = VQ/Ib profiles, von Mises (or timber bending/shear) safety factors, serviceability L/δ, a rolling load with its moment envelope, and the exact fundamental frequency.
 
 ## Local Development
 

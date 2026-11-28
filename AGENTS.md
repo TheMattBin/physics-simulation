@@ -51,7 +51,8 @@ src/
     ├── quantum-tunneling/  # Tier 3: 1D TDSE, Crank–Nicolson + exactly tracked absorbing boundaries
     ├── quantum-bound-states/ # Tier 2: Eigenstates (analytic + Sturm bisection) with exact spectral evolution
     ├── hydrogen-atom/      # Tier 2: Exact hydrogen orbitals, |ψ|² sampling, dipole selection rules & lifetimes
-    └── electron-double-slit/ # Tier 1: Fresnel-integral diffraction, single-electron detection, which-path duality
+    ├── electron-double-slit/ # Tier 1: Fresnel-integral diffraction, single-electron detection, which-path duality
+    └── beam-bending/       # Tier 1: Euler–Bernoulli beams (Macaulay closed form), Jourawski shear, von Mises / timber checks
 ```
 
 ## How to Add a New Simulation

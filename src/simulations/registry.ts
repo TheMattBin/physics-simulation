@@ -12,6 +12,7 @@ import { QuantumTunnelingLab } from './quantum-tunneling';
 import { QuantumBoundStatesLab } from './quantum-bound-states';
 import { HydrogenAtomLab } from './hydrogen-atom';
 import { ElectronDoubleSlitLab } from './electron-double-slit';
+import { BeamBendingLab } from './beam-bending';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -974,6 +975,81 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Choose "Which-Path Detector" (D = 1), let it collect, and read the fringe contrast. Then lower D to 0.8 and 0.6, clearing the screen each time.',
           takeaway:
             'With perfect which-path information the fringes vanish and the screen shows two overlapping single-slit bands. Partial information leaves partial fringes: D = 0.8 gives V = 0.6, and D = 0.6 gives V = 0.8, following V² + D² = 1. Knowing the path and seeing interference are complementary.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'beam-bending',
+    title: 'Beam Bending, Shear & Stress',
+    subtitle:
+      'Load steel, aluminium, titanium or timber beams and see where they bend, shear and yield: exact Euler–Bernoulli diagrams, cross-section stress profiles and a rolling load.',
+    domain: 'mechanical',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 7',
+    tags: ['Euler–Bernoulli', 'Shear & Moment Diagrams', 'Flexure Formula', 'Jourawski Shear', 'von Mises Yield'],
+    equationPreview: 'EI\\,\\frac{d^2 w}{dx^2} = -M(x), \\qquad \\sigma = \\frac{M y}{I}',
+    summary:
+      'Shear force, bending moment and deflection diagrams update together as you load a beam. Inspect σ(y) and τ(y) at any section, compare I-beams, tubes and timber, roll a load across the span and balance an overhang.',
+    component: BeamBendingLab,
+    theory: {
+      overview:
+        'A beam carries load by bending. Cut it anywhere and the two pieces must hold each other in equilibrium through an internal shear force V and bending moment M. For the statically determinate beams here, statics alone fixes V(x) and M(x). The material and the shape of the cross-section decide only how much the beam bends and how highly it is stressed. Bending stress grows linearly from zero at the neutral axis to a maximum at the outer fibres, which is why I-beams put most of their material in flanges far from the axis. Shear stress is largest at the neutral axis and is carried mostly by the web. Engineers check two separate things: strength (does the stress stay below yield, with a safety margin?) and stiffness (does the beam sag less than about span/360?).',
+      equations: [
+        {
+          label: 'Load, Shear & Moment',
+          latex: '\\frac{dV}{dx} = -q(x), \\qquad \\frac{dM}{dx} = V(x)',
+          explanation:
+            'A downward load makes the shear diagram slope or step down, and the moment is the running area under the shear diagram. So M peaks where V crosses zero, and a point load P causes a jump of P in V and a kink in M.',
+        },
+        {
+          label: 'Euler–Bernoulli Elastic Curve',
+          latex: 'EI\\,\\frac{d^2 w}{dx^2} = -M(x), \\qquad w_{\\max} = \\frac{PL^3}{48\\,EI}',
+          explanation:
+            'Curvature is proportional to the moment and inversely proportional to the flexural rigidity EI (w is measured downward). Integrating twice with the support conditions gives classics like PL³/48EI for a central point load on a simply supported beam. The lab integrates exactly with Macaulay brackets ⟨x − a⟩ⁿ.',
+        },
+        {
+          label: 'Flexure Formula',
+          latex: '\\sigma = \\frac{M\\,y}{I}, \\qquad \\sigma_{\\max} = \\frac{M}{S}, \\quad S = \\frac{I}{h/2}',
+          explanation:
+            'Stress varies linearly through the depth: compression on one side of the neutral axis, tension on the other. Making a section deeper raises I much faster than its area, which is why beams are deep and narrow.',
+        },
+        {
+          label: 'Transverse Shear & First Yield',
+          latex: '\\tau = \\frac{V\\,Q(y)}{I\\,b(y)}, \\qquad \\sigma_{vm} = \\sqrt{\\sigma^2 + 3\\tau^2} \\le \\sigma_y',
+          explanation:
+            'In Jourawski’s formula, Q is the first moment of the area beyond height y and b is the width cut there. τ peaks at the neutral axis (1.5 V/A for a rectangle) and jumps where a thin web meets a wide flange. A metal first yields where the von Mises stress σ_vm reaches σ_y.',
+        },
+      ],
+      assumptions: [
+        'Euler–Bernoulli theory: plane sections stay plane and perpendicular to the neutral axis, slopes are small, and shear deformation is neglected. This is accurate for slender beams (L/h above about 10). The lab warns you when the beam is stubbier.',
+        'All three support layouts are statically determinate, so the reactions, V(x) and M(x) come from statics alone and do not depend on the material. Deflections are exact closed-form Macaulay integrals. Peak values are searched on a 241-point grid plus both sides of every load and support and every zero-shear point.',
+        'The material is linear-elastic, isotropic and homogeneous up to the failure criterion. Metals use von Mises first yield. Timber (glulam GL28h) is orthotropic, so it is checked separately against its bending strength f_m = 28 MPa and its much lower shear strength f_v = 3.5 MPa. Results past U = 1 are not valid.',
+        'Jourawski’s τ is the average across the cut width b(y). Horizontal shear flow in the flanges, stress concentrations under point loads and supports, bearing stresses, and lateral-torsional or local buckling are not modelled. Real slender I-beams are often limited by buckling before they yield.',
+        'Section shapes keep fixed proportions as the depth h changes: I-beam flanges 0.65h × 0.10h with a 0.07h web, a box 0.65h wide with 0.08h walls, a pipe with a 0.1h wall, and a rectangle 0.5h wide. The rolling load moves quasi-statically (no dynamic amplification). f₁ is the exact Euler–Bernoulli fundamental frequency of the unloaded beam, with β₁L solved numerically for the overhang. Deflections are exaggerated on screen by the factor shown top-right.',
+      ],
+      experiments: [
+        {
+          title: 'Stiffness Is Not Strength',
+          prompt:
+            'Load the Steel Girder, turn Self-Weight OFF and note the peak bending stress and the deflection. Switch the material to Al 6061-T6, then Ti-6Al-4V. Finally load the Timber Floor Beam and compare its safety factor with its deflection.',
+          takeaway:
+            'The stress stays at 53.1 MPa for every metal. M comes from statics, and σ = M/S depends only on the shape. Deflection scales with 1/E: 7.4 mm in steel, 21.6 mm in aluminium (E is 2.9× lower) and 13.1 mm in titanium. The timber beam is strong enough (n ≈ 1.6) but sags L/181, about twice the usual L/360 limit for floors. For timber floors, stiffness usually governs, not strength.',
+        },
+        {
+          title: 'A Truck Crossing the Bridge',
+          prompt:
+            'Load the Steel Girder and press Play to roll the 80 kN load across the span. Watch R_A and the moment diagram, and let the dashed moment envelope build up over a full pass.',
+          takeaway:
+            'R_A changes linearly with the load position: the influence line of a reaction is a straight line. The moment under the load is P·a(L − a)/L, so the envelope is a parabola peaking at midspan. There the load contributes 160 kN·m and the uniform load 58.3 kN·m, 218.3 kN·m in total. That is the moment the girder must be designed for, even though the load spends most of its time elsewhere.',
+        },
+        {
+          title: 'Balance the Overhang',
+          prompt:
+            'Load Overhang Balance (12 kN/m over 10 m). Slide Support B from 0.60 L towards 0.95 L while watching the moment diagram, and find the position that makes the largest |M| as small as possible.',
+          takeaway:
+            'At 0.60 L the hogging moment over the overhang dominates (−96 kN·m). Near 0.95 L the beam is almost simply supported (+135 kN·m sagging). The optimum is where hogging over B equals sagging in the span, at b = L/√2 ≈ 0.707 L. There |M| is only 51.5 kN·m, about a third of the 150 kN·m (qL²/8) of the same beam supported at its ends.',
         },
       ],
     },
