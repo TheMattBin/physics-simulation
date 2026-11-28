@@ -16,6 +16,8 @@ import { BeamBendingLab } from './beam-bending';
 import { TensileTestLab } from './tensile-test';
 import { ReactionKineticsLab } from './reaction-kinetics';
 import { ChemicalEquilibriumLab } from './chemical-equilibrium';
+import { SpecialRelativityLab } from './special-relativity';
+import { BlackHoleGeodesicsLab } from './black-hole-geodesics';
 
 export const SIMULATIONS: SimulationEntry[] = [
   {
@@ -1282,6 +1284,162 @@ export const SIMULATIONS: SimulationEntry[] = [
             'Switch to Haber–Bosch (200 bar, 450 °C) and let it settle. Then try 300 °C, then 400 bar, condense out the NH₃, add argon, and switch off the catalyst.',
           takeaway:
             'At 450 °C and 200 bar only 24 % of the gas is NH₃ at equilibrium. At 300 °C it would be 61 %, but the catalysed reaction runs about 26× slower, which is why plants operate at 400–450 °C. Raising the pressure to 400 bar lifts the yield to 35 %, because 4 molecules become 2. Condensing out NH₃ drops Q below K, so more N₂ and H₂ react. Argon at constant pressure dilutes the mixture and pushes it back. Without the catalyst nothing happens, yet K is unchanged: a catalyst speeds up both directions equally.',
+        },
+      ],
+    },
+  },
+  {
+    id: 'special-relativity',
+    title: 'Special Relativity: Spacetime, Twin Paradox & Simultaneity',
+    subtitle:
+      'Minkowski diagrams, Doppler light-pulse counting, Rindler hyperbolic acceleration, the Barn–Pole paradox, and cosmic-ray muons.',
+    domain: 'relativity',
+    level: 'HS / University',
+    status: 'ready',
+    phase: 'Phase 9',
+    tags: ['Lorentz Boost', 'Minkowski Diagram', 'Twin Paradox', 'Simultaneity'],
+    equationPreview: '\\Delta s^2 = c^2\\Delta t^2 - \\Delta x^2, \\quad \\gamma = \\frac{1}{\\sqrt{1-\\beta^2}}',
+    summary:
+      'Resolve the Twin and Barn–Pole paradoxes on live Minkowski spacetime diagrams, compare Earth vs. muon rest frames, and drag spacetime events across invariant hyperbolas.',
+    component: SpecialRelativityLab,
+    theory: {
+      overview:
+        'Einstein’s two postulates—that the laws of physics and the speed of light c are identical in every inertial frame—force space and time to mix into a single four-dimensional geometry: Minkowski spacetime. Different observers disagree on elapsed time (time dilation), lengths (Lorentz contraction), and even whether distant events happen simultaneously, yet every observer measures the exact same invariant spacetime interval Δs² = c²Δt² − Δx².',
+      equations: [
+        {
+          label: 'Lorentz Transformation & Factor',
+          latex:
+            "x' = \\gamma(x - \\beta ct), \\quad ct' = \\gamma(ct - \\beta x), \\quad \\gamma = \\frac{1}{\\sqrt{1 - \\beta^2}}",
+          explanation:
+            'Transforms coordinates from frame S to frame S′ moving at v = βc along +x. On a Minkowski diagram, both the x′ and ct′ axes tilt symmetrically toward the 45° light cone by angle arctan(β).',
+        },
+        {
+          label: 'Invariant Spacetime Interval & Proper Time',
+          latex:
+            '\\Delta s^2 = (c\\Delta t)^2 - (\\Delta x)^2 = (c\\Delta t\')^2 - (\\Delta x\')^2, \\quad \\Delta\\tau = \\int \\sqrt{1 - \\beta(t)^2}\\,dt',
+          explanation:
+            'Timelike intervals (Δs² > 0) preserve causal order in all frames; along any curved worldline, a clock measures proper time Δτ—longest for an unaccelerated inertial path (why the stay-at-home twin ages more).',
+        },
+        {
+          label: 'Relativity of Simultaneity',
+          latex: '\\Delta t\' = 0 \\implies c\\Delta t = \\beta\\,\\Delta x',
+          explanation:
+            'Events simultaneous in S (Δt = 0) separated by Δx occur at Δct′ = −γβΔx in S′: the leading clock reads earlier. This resolves the Barn–Pole paradox without crushing the pole.',
+        },
+        {
+          label: 'Relativistic Doppler & Velocity Addition',
+          latex:
+            '\\frac{f_{\\text{obs}}}{f_{\\text{emit}}} = \\sqrt{\\frac{1 + \\beta_{\\text{app}}}{1 - \\beta_{\\text{app}}}}, \\qquad u\' = \\frac{u - v}{1 - uv/c^2}',
+          explanation:
+            'Approaching clocks appear sped up by √((1+β)/(1−β)) and receding clocks slowed down; collinear velocities combine so relative speeds never exceed c.',
+        },
+      ],
+      assumptions: [
+        'Motion is restricted to 1+1D flat Minkowski spacetime (zero gravitational curvature) with c = 1 natural light-units (ly/yr, m, or light-seconds).',
+        'In Twin Paradox "Hyperbolic (Rindler)" mode, launch, turnaround, and braking follow exact constant proper acceleration α, yielding smooth hyperbolic worldlines x(u) = (√(1 + (αu)²) − 1)/α.',
+        'Barn doors are idealized as massless shutters flashing closed and open at ct = 0 in the Barn frame so no mechanical impulse is needed unless the pole overhangs.',
+        'Atmospheric muons use the PDG rest lifetime τ₀ = 2.197 µs in a uniform monoenergetic vertical beam without ionization energy loss.',
+      ],
+      experiments: [
+        {
+          title: 'Where Did Earth’s Missing Years Go?',
+          prompt:
+            'In Twin Paradox (L = 4 ly, β = 0.80c), watch the violet Simultaneity Slice at turnaround, then switch Turnaround Kinematics from Instantaneous to Hyperbolic (Rindler).',
+          takeaway:
+            'At β = 0.80c (γ = 5/3), Twin B ages 6.0 yr while Twin A ages 10.0 yr. Outbound and inbound, B thinks A’s clock runs slow (1.8 yr each leg), leaving a 2βL = 6.4 yr gap. Switching to Rindler acceleration shows B’s plane of simultaneity sweeping smoothly across those 6.4 Earth years while B accelerates at the star—and counting the Doppler light pulses confirms both twins agree on 10 vs. 6 flashes!',
+        },
+        {
+          title: 'How a 12.5 m Pole Fits in a 10 m Barn',
+          prompt:
+            'Open Barn & Pole at β = 0.80c. Watch ct = 0 in Barn Rest Frame S, then switch to Pole Rest Frame S′ and scrub ct′ across E_exit and E_rear.',
+          takeaway:
+            'In the Barn frame S, the pole contracts to 12.5 / (5/3) = 7.5 m and sits cleanly inside both simultaneously closed doors at ct = 0. In the Pole frame S′, the pole is 12.5 m and the barn is only 6.0 m—no paradox occurs because the exit door flashes shut and reopens at ct′ = −6.67 m before the nose arrives, while the rear door closes at ct′ = +6.67 m after the tail is inside!',
+        },
+        {
+          title: 'Why Cosmic Muons Reach Sea Level',
+          prompt:
+            'Switch to Cosmic Muons (H = 15 km, β = 0.995c) and compare Earth Frame S against Muon Rest Frame S′.',
+          takeaway:
+            'Without relativity, a muon averages cτ₀ ≈ 0.66 km before decaying, so only ~10⁻⁸ % would survive 15 km. At 0.995c (γ ≈ 10), Earth observers see the muon’s lifetime dilated 10× (10.2 % survive), while in the muon’s own rest frame its lifetime is still 2.2 µs—instead, Earth’s atmosphere is contracted 10× to 1.50 km!',
+        },
+      ],
+    },
+  },
+  {
+    id: 'black-hole-geodesics',
+    title: 'Black Hole Orbits, Photon Sphere & Gravitational Lensing',
+    subtitle:
+      'Exact Schwarzschild geodesics: apsidal precession, the innermost stable circular orbit (ISCO), horizon time freeze, and Einstein rings.',
+    domain: 'relativity',
+    level: 'University',
+    status: 'ready',
+    phase: 'Phase 9',
+    tags: ['General Relativity', 'Schwarzschild Metric', 'Photon Sphere', 'Gravitational Lensing'],
+    equationPreview:
+      'V_{\\text{eff}}(r) = \\left(1 - \\frac{r_s}{r}\\right)\\!\\left(1 + \\frac{\\ell^2}{r^2}\\right), \\quad r_{\\text{ISCO}} = 3\\,r_s',
+    summary:
+      'Integrate timelike and null geodesics in curved Schwarzschild spacetime—compare GR rosette orbits with a Newtonian twin, plunge past the event horizon, and warp starlight into an Einstein ring.',
+    component: BlackHoleGeodesicsLab,
+    theory: {
+      overview:
+        'Around a non-rotating spherical mass M, Einstein’s vacuum field equations admit the exact Schwarzschild metric characterized by the Schwarzschild radius r_s = 2GM/c². Unlike Newtonian 1/r² gravity, where any angular momentum ℓ > 0 creates an impenetrable centrifugal barrier, General Relativity adds an attractive −ℓ²r_s/r³ term that causes elliptical orbits to precess, destroys stable circular orbits inside r_ISCO = 3r_s, traps light on an unstable photon sphere at 1.5r_s, and bends background starlight into lensed arcs and Einstein rings.',
+      equations: [
+        {
+          label: 'Schwarzschild Metric',
+          latex:
+            'ds^2 = -\\left(1 - \\frac{r_s}{r}\\right)c^2 dt^2 + \\left(1 - \\frac{r_s}{r}\\right)^{-1} dr^2 + r^2\\,d\\phi^2',
+          explanation:
+            'Written in the equatorial plane (θ = π/2) with r_s = 2GM/c². Clocks at radius r tick slower than distant clocks by √(1 − r_s/r), while radial rulers stretch.',
+        },
+        {
+          label: 'Timelike Effective Potential',
+          latex:
+            '\\left(\\frac{dr}{d\\tau}\\right)^2 + V_{\\text{eff}}(r) = \\tilde{E}^2, \\quad V_{\\text{eff}}(r) = \\left(1 - \\frac{r_s}{r}\\right)\\!\\left(1 + \\frac{\\ell^2}{r^2}\\right)',
+          explanation:
+            'Expanding V_eff yields 1 − r_s/r + ℓ²/r² − r_sℓ²/r³ (in r_s = 1 units). Below ℓ_ISCO = √3 r_s c, the barrier peak vanishes and every inward trajectory plunges into the horizon.',
+        },
+        {
+          label: 'Photon Sphere & Black Hole Shadow',
+          latex:
+            'r_{\\text{ph}} = \\frac{3}{2}\\,r_s, \\qquad b_{\\text{crit}} = \\frac{3\\sqrt{3}}{2}\\,r_s \\approx 2.598\\,r_s',
+          explanation:
+            'Massless photons experience a potential peak at 1.5 r_s. Rays with impact parameter |b| < b_crit are captured, making the black hole’s apparent shadow 2.6× larger than its event horizon!',
+        },
+        {
+          label: 'Light Deflection & Einstein Lens Equation',
+          latex:
+            '\\Delta\\phi_{\\text{weak}} = \\frac{4GM}{b c^2} = \\frac{2 r_s}{b}, \\qquad \\theta_{\\pm} = \\frac{1}{2}\\!\\left(\\beta \\pm \\sqrt{\\beta^2 + 4\\theta_E^2}\\right)',
+          explanation:
+            'Curved space + time bending doubles the Newtonian deflection angle. A background star at offset β splits into two magnified images θ_±, merging into a full Einstein ring at β = 0.',
+        },
+      ],
+      assumptions: [
+        'Spacetime is modeled by the static, uncharged, non-rotating (a = 0) vacuum Schwarzschild metric; test particles and photons have negligible self-gravity.',
+        'Timelike geodesics are integrated with adaptive 4th-order Runge–Kutta directly in proper time τ for (r, φ, dr/dτ), which is nonsingular across r = r_s and conserves Ẽ² − ((dr/dτ)² + V_eff) to ~10⁻¹².',
+        'The Newtonian comparison twin starts at identical (r₀, dr/dτ, ℓ) under a pure −GM/r² force (missing only the relativistic −3r_sℓ²/(2r⁴) radial acceleration term).',
+        'The Observer Sky panel evaluates the exact point-mass gravitational lens equation in units of the Einstein angular radius θ_E.',
+      ],
+      experiments: [
+        {
+          title: 'Rosette Precession & Crossing the ISCO Cliff',
+          prompt:
+            'Run Precessing Rosette with Newtonian Twin ON and compare the closed cyan ellipse against the indigo GR rosette. Then drag Angular Momentum ℓ below 1.73 (or click Sub-ISCO Plunge).',
+          takeaway:
+            'The −r_sℓ²/r³ term pulls the particle slightly harder near periapsis, rotating the orbit forward each revolution. Once ℓ drops below √3 ≈ 1.732, the minimum in V_eff(r) disappears completely: unlike Newtonian gravity, no stable orbit exists inside r_ISCO = 3 r_s!',
+        },
+        {
+          title: 'Two Clocks at the Event Horizon',
+          prompt:
+            'Switch to Horizon Plunge (r₀ = 7 r_s) and watch Astronaut Clock r(τ) in green against Distant Observer Clock r(t) in coral, along with Beacon f_∞ / f_emit.',
+          takeaway:
+            'The astronaut crosses r = 1 r_s uneventfully and hits the central singularity in finite proper time τ = (π/2)r₀^(3/2) ≈ 29.1 r_s/c (~1.4 ms for a 10 M☉ black hole!). Yet to a distant observer, outgoing photons struggle out of the gravity well: r(t) freezes asymptotically at r_s and f_∞/f_emit redshifts smoothly to zero.',
+        },
+        {
+          title: 'Skimming the Photon Sphere & Forming an Einstein Ring',
+          prompt:
+            'In Photon Sphere & Lensing, click "Skim Photon Sphere (2.60 r_s)" and slowly nudge Impact Parameter b across 2.598 r_s. Then drag the amber crosshair on the Observer Sky onto the black hole.',
+          takeaway:
+            'Just above b_crit = 2.598 r_s, photons whip a full 360° loop around r = 1.5 r_s before escaping; nudging b to 2.58 r_s tips them over the potential peak into the horizon. Dragging the background star to β = 0 stretches both lensed arcs until they join into a bright Einstein ring.',
         },
       ],
     },
